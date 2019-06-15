@@ -6,6 +6,7 @@ import java.util.*;
 
 public class QuestionBoard {
     private HashMap board;
+    private HashMap currentQuestionDict;
 
     // Initialize the board
     QuestionBoard() {
@@ -18,7 +19,58 @@ public class QuestionBoard {
          */
         this.board = new HashMap<String, ArrayList<BoardTile>>();
 
+        /**
+         * We also have to keep track of the current question for each category
+         * Every time someone answers a question on the board they will move to the next question
+         * We can represent this as a dictionary, the categories are keys, the question index is the value
+         * index is 0-4 for a standard jepordy board
+         */
+        this.currentQuestionDict = new HashMap<String, Integer>();
+
+        // set up the board
+        load_board();
+
         // the initializer can be updated to read from a file instead of empty initializer
+    }
+
+    /**
+     * Get the current question for a specified category
+     *
+     * @param questionCategory the category you want to ask a question
+     *
+     * @return the question
+     */
+    public String currentQuestion(String questionCategory) {
+        int currentIndex = (Integer) this.currentQuestionDict.get(questionCategory);
+        ArrayList<BoardTile> row = (ArrayList<BoardTile>) this.board.get(questionCategory);
+        BoardTile tile = row.get(currentIndex);
+        return tile.getQuestion();
+    }
+
+    /**
+     * Get the answer for the question for a specified category
+     *
+     * @param answerCategory the category you need the answer for
+     *
+     * @return the answer
+     */
+    public String currentAnswer(String answerCategory) {
+        int currentIndex = (Integer) this.currentQuestionDict.get(answerCategory);
+        ArrayList<BoardTile> row = (ArrayList<BoardTile>) this.board.get(answerCategory);
+        BoardTile tile = row.get(currentIndex);
+        return tile.getAnswer();
+    }
+
+    /**
+     * increment the current question dictionary to the next question for
+     * the given category
+     *
+     * @param category the category to increment
+     */
+    public void incrementCategotry(String category) {
+        Integer currentIndex = (Integer) this.currentQuestionDict.get(category);
+        Integer nextIndex = currentIndex + 1;
+        this.currentQuestionDict.replace(category, nextIndex);
     }
 
     /**
@@ -56,33 +108,38 @@ public class QuestionBoard {
         // then put the list in the dictionary
         this.board.put("Space", board_column1);
 
+        // and initialize the currentQuestionDict for this category to 0
+        this.currentQuestionDict.put("Space", 0);
+
         // and do everything again:
         BoardTile tile6 = new BoardTile(200,
                 "Which NHL player has the most career points?",
                 "Wayne Gretzky");
         BoardTile tile7 = new BoardTile(400,
-                "Who is the winningest NHL goalie ov all time",
+                "Who is the winningest NHL goalie of all time",
                 "Martain Brodeur");
         BoardTile tile8 = new BoardTile(600,
                 "What is the term for a goal, an assist, and a fight in one game?",
                 "Gordie Howe Hat Trick");
         BoardTile tile9 = new BoardTile(800,
                 "Who shot the fastest puck in recorded history?",
-                "Bobby Hull");
+                "Bobby Hull (rec. 118.3 mph)");
         BoardTile tile10 = new BoardTile(1000,
                 "Which NHL player holds the record for the most points in a single game?",
                 "Darryl Sittler");
 
         ArrayList<BoardTile> board_column2 = new ArrayList<BoardTile>();
-        board_column1.add(tile6);
-        board_column1.add(tile7);
-        board_column1.add(tile8);
-        board_column1.add(tile9);
-        board_column1.add(tile10);
+        board_column2.add(tile6);
+        board_column2.add(tile7);
+        board_column2.add(tile8);
+        board_column2.add(tile9);
+        board_column2.add(tile10);
 
         this.board.put("Hockey", board_column2);
 
-        // do a few more times to make a full board
+        this.currentQuestionDict.put("Hockey", 0);
+
+        // do a few more times (6) to make a full board
         // can wrap into a loop if you have a properly formatted file
     }
 
