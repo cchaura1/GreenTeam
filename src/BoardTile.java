@@ -15,6 +15,17 @@ public class BoardTile {
     }
 
     /**
+     * Debug function for displaying the values for a board tile
+     *
+     * @returns a string representation of a board tile
+     */
+    public String toString() {
+        return ("Question: " + this.question +
+                "\nAnswer: " + this.answer +
+                "\nValue: " + Integer.toString(this.value));
+    }
+
+    /**
      * sets the value of a board tile
      *
      * @param value the monetary value of the tile

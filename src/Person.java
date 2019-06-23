@@ -6,14 +6,14 @@ public class Person {
     private String name;
     private int round1_score;
     private int round2_score;
-    private boolean free_turn;
+    private int free_turns;
 
     // initializer to use at the beginning of the game
     Person(String name) {
         this.name = name;
         this.round1_score = 0;
         this.round2_score = 0;
-        this.free_turn = false;
+        this.free_turns = 0;
     }
 
     /**
@@ -71,20 +71,27 @@ public class Person {
     }
 
     /**
-     * Checks whether the player has a free turn
+     * Check how many free turns the player has
      *
-     * @return whether the player has a free turn
+     * @return the number of free turns
      */
-    public boolean getFree_turn() {
-        return this.free_turn;
+    public int getFree_turns() {
+        return this.free_turns;
     }
 
     /**
-     * set whether the player has a free turn card
+     * set the number of free turns
      *
-     * @param free whether the player has a free turn card
+     * @param free the number of free turns
      */
-    public void setFree_turn(boolean free) {
-        this.free_turn = free;
+    public void setFree_turns(int free) {
+        this.free_turns = free;
+    }
+
+    /**
+     * add one free turn to this person
+     */
+    public void addOneFreeTurn() {
+        this.free_turns += 1;
     }
 }

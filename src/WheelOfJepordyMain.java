@@ -9,10 +9,10 @@ public class WheelOfJepordyMain {
         // demo code...
 
 
-        // this is how you access the board
+        // this is how you create the board
         QuestionBoard QuestionBoard = new QuestionBoard();
 
-        // just how to access values from the board
+        // how to access values from the board
         String question1 = QuestionBoard.getBoard().get("Space").get(0).getQuestion();
         System.out.println(question1);
         String answer1 = QuestionBoard.getBoard().get("Space").get(0).getAnswer();
@@ -20,6 +20,7 @@ public class WheelOfJepordyMain {
 
         String question2 = QuestionBoard.getBoard().get("Hockey").get(3).getQuestion();
         System.out.println(question2);
+        
         String answer2 = QuestionBoard.getBoard().get("Hockey").get(3).getAnswer();
         System.out.println(answer2);
 
@@ -37,7 +38,16 @@ public class WheelOfJepordyMain {
         // And now we can access the next question:
         System.out.println(QuestionBoard.currentQuestion("Hockey"));
         System.out.println(QuestionBoard.currentAnswer("Hockey"));
+        System.out.println(QuestionBoard.currentQuestionValue("Hockey"));
+        System.out.println(QuestionBoard.currentTile("Hockey"));
+        QuestionBoard.incrementCategotry("Hockey");
 
 
+        // this is how you create the wheel
+        Wheel wheel = new Wheel(QuestionBoard);
+        wheel.printWheel();
+
+        // and this is how you spin the wheel to get a random sector
+        System.out.println("The sector is: " + wheel.spinWheel());
     }
 }

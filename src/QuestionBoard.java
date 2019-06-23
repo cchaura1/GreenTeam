@@ -62,6 +62,34 @@ public class QuestionBoard {
     }
 
     /**
+     * Get the value for the question for a specified category
+     *
+     * @param valueCategory the category you need the value for
+     *
+     * @return the value
+     */
+    public Integer currentQuestionValue(String valueCategory) {
+        int currentIndex = (Integer) this.currentQuestionDict.get(valueCategory);
+        ArrayList<BoardTile> row = (ArrayList<BoardTile>) this.board.get(valueCategory);
+        BoardTile tile = row.get(currentIndex);
+        return tile.getValue();
+    }
+
+    /**
+     * Get the BoardTile object for the question for a specified category
+     *
+     * @param category the category you need the value for
+     *
+     * @return the BoardTile
+     */
+    public BoardTile currentTile(String category) {
+        int currentIndex = (Integer) this.currentQuestionDict.get(category);
+        ArrayList<BoardTile> row = (ArrayList<BoardTile>) this.board.get(category);
+        BoardTile tile = row.get(currentIndex);
+        return tile;
+    }
+
+    /**
      * increment the current question dictionary to the next question for
      * the given category
      *
