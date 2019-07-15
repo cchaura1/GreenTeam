@@ -2,11 +2,20 @@
  * This class represents the jepordy-style board of questions
  */
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URL;
 import java.util.*;
+
 
 public class QuestionBoard {
     private HashMap board;
     private HashMap currentQuestionDict;
+	private BufferedReader reader1;
+	private BufferedReader reader2;
 
     // Initialize the board
     QuestionBoard() {
@@ -106,66 +115,40 @@ public class QuestionBoard {
      *
      * ******* This is just an example, we should load from a file **********
      * Feel very free to update the questions...
+     * 
      */
     public void load_board() {
-        // first create 5 board tiles (to make up a single category)
-        BoardTile tile1 = new BoardTile(200,
-                "What is the seventh planet in the solar system?",
-                "Saturn");
-        BoardTile tile2 = new BoardTile(400,
-                "When will Halleys Comet return to Earth?",
-                "2016");
-        BoardTile tile3 = new BoardTile(600,
-                "How much does a full NASA spacesuit cost (approximately)?",
-                "$12,000,000");
-        BoardTile tile4 = new BoardTile(800,
-                "What was the number of the last Apollo mission?",
-                "17");
-        BoardTile tile5 = new BoardTile(1000,
-                "How many known moons orbit Neptune?",
-                "14");
-
         // next put all the tiles into a list
         ArrayList<BoardTile> board_column1 = new ArrayList<BoardTile>();
-        board_column1.add(tile1);
-        board_column1.add(tile2);
-        board_column1.add(tile3);
-        board_column1.add(tile4);
-        board_column1.add(tile5);
-
-        // then put the list in the dictionary
-        this.board.put("Space", board_column1);
-
-        // and initialize the currentQuestionDict for this category to 0
-        this.currentQuestionDict.put("Space", 0);
-
-        // and do everything again:
-        BoardTile tile6 = new BoardTile(200,
-                "Which NHL player has the most career points?",
-                "Wayne Gretzky");
-        BoardTile tile7 = new BoardTile(400,
-                "Who is the winningest NHL goalie of all time",
-                "Martain Brodeur");
-        BoardTile tile8 = new BoardTile(600,
-                "What is the term for a goal, an assist, and a fight in one game?",
-                "Gordie Howe Hat Trick");
-        BoardTile tile9 = new BoardTile(800,
-                "Who shot the fastest puck in recorded history?",
-                "Bobby Hull (rec. 118.3 mph)");
-        BoardTile tile10 = new BoardTile(1000,
-                "Which NHL player holds the record for the most points in a single game?",
-                "Darryl Sittler");
-
         ArrayList<BoardTile> board_column2 = new ArrayList<BoardTile>();
-        board_column2.add(tile6);
-        board_column2.add(tile7);
-        board_column2.add(tile8);
-        board_column2.add(tile9);
-        board_column2.add(tile10);
-
-        this.board.put("Hockey", board_column2);
-
-        this.currentQuestionDict.put("Hockey", 0);
+    	String line1;
+    	String line2;
+    	URL path1 = QuestionBoard.class.getResource("board1.txt");
+    	URL path2 = QuestionBoard.class.getResource("board2.txt");
+        	File file1 = new File(path1.getFile());
+        	File file2 = new File(path2.getFile());
+        	
+        	try {
+        		reader1 = new BufferedReader(new FileReader(file1));
+				while ((line1 = reader1.readLine()) != null) {
+						String [] d = line1.split(":");
+				board_column1.add(new BoardTile(Integer.parseInt(d[0]),d[1],d[2]));			
+				}
+				  // then put the list in the dictionary
+		        this.board.put("Space", board_column1);
+		        // and initialize the currentQuestionDict for this category to 0
+		        this.currentQuestionDict.put("Space", 0);
+				reader2 = new BufferedReader(new FileReader(file2));
+				while ((line2 = reader2.readLine()) != null) {
+						String [] d = line2.split(":");
+				board_column2.add(new BoardTile(Integer.parseInt(d[0]),d[1],d[2]));			
+				}
+				this.board.put("Hockey", board_column2);
+		        this.currentQuestionDict.put("Hockey", 0);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
         // do a few more times (6) to make a full board
         // can wrap into a loop if you have a properly formatted file

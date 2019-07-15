@@ -1,0 +1,5 @@
+200:Which NHL player has the most career points?:Wayne Gretzky
+400:Who is the winningest NHL goalie of all time:Martain Brodeur
+600:What is the term for a goal, an assist, and a fight in one game?:Gordie Howe Hat Trick
+800:Who shot the fastest puck in recorded history?:Bobby Hull (rec. 118.3 mph)
+1000:Which NHL player holds the record for the most points in a single game?:Darryl Sittler
