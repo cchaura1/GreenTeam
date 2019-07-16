@@ -179,4 +179,31 @@ public class QuestionBoard {
     public HashMap<String, List<BoardTile>> getBoard() {
         return this.board;
     }
+
+    /**
+     * get the the contents of the board as a readable string
+     *
+     * @returns a string representation of the board
+     */
+    public String toString() {
+
+        String boardString = "";
+
+        // iterate over each category
+        for (Object key : this.board.keySet()) {
+            boardString += ("-----------------------------------\n");
+            boardString += ("Category: \n" + key.toString() + "\n");
+
+            // get the question column for the given category
+            List<BoardTile> column = new ArrayList<BoardTile>();
+            column = this.getBoard().get(key);
+
+            // for each question in the category display the board tile
+            for (BoardTile tile : column) {
+                boardString += (tile.toString() + "\n");
+            }
+        }
+        boardString += ("-----------------------------------\n");
+        return boardString;
+    }
 }

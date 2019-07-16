@@ -79,19 +79,35 @@ public class Person {
         return this.free_turns;
     }
 
-    /**
-     * set the number of free turns
-     *
-     * @param free the number of free turns
-     */
-    public void setFree_turns(int free) {
-        this.free_turns = free;
-    }
+//    /**
+//     * set the number of free turns
+//     *
+//     * @param free the number of free turns
+//     */
+//    public void setFree_turns(int free) {
+//        this.free_turns = free;
+//    }
 
     /**
      * add one free turn to this person
      */
     public void addOneFreeTurn() {
         this.free_turns += 1;
+    }
+
+    /**
+     * converts Person object to String
+     *
+     * @return the person as a readable String
+     */
+    public String toString() {
+        String personString = "";
+
+        personString += "Name: " + this.name + "\n";
+        personString += "Round 1 Score: " + this.round1_score + "\n";
+        personString += "Round 2 Score: " + this.round2_score + "\n";
+        personString += "Free Turns: " + this.free_turns + "\n";
+
+        return personString;
     }
 }

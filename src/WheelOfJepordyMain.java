@@ -8,21 +8,35 @@ public class WheelOfJepordyMain {
 
         // demo code...
 
+        // we can create some Person objects like so:
+        Person Chetan = new Person("Chetan");
+        Person Mike = new Person("Mike");
+        Person Paul = new Person("Paul");
+        Person Brian = new Person("Brian");
+
+        System.out.println("Person - Chetan: \n" + Chetan.toString());
+        System.out.println("Person - Mike: \n" + Mike.toString());
+        System.out.println("Person - Paul: \n" + Paul.toString());
+        System.out.println("Person - Brian: \n" + Brian.toString());
+
 
         // this is how you create the board
         QuestionBoard QuestionBoard = new QuestionBoard();
 
-        // how to access values from the board
-        String question1 = QuestionBoard.getBoard().get("Space").get(0).getQuestion();
-        System.out.println(question1);
-        String answer1 = QuestionBoard.getBoard().get("Space").get(0).getAnswer();
-        System.out.println(answer1);
+        // show the board contents
+        System.out.println(QuestionBoard.toString());
 
-        String question2 = QuestionBoard.getBoard().get("Hockey").get(3).getQuestion();
-        System.out.println(question2);
-        
-        String answer2 = QuestionBoard.getBoard().get("Hockey").get(3).getAnswer();
-        System.out.println(answer2);
+        // one way to access values from the board
+//        String question1 = QuestionBoard.getBoard().get("Space").get(0).getQuestion();
+//        System.out.println(question1);
+//        String answer1 = QuestionBoard.getBoard().get("Space").get(0).getAnswer();
+//        System.out.println(answer1);
+//
+//        String question2 = QuestionBoard.getBoard().get("Hockey").get(3).getQuestion();
+//        System.out.println(question2);
+//
+//        String answer2 = QuestionBoard.getBoard().get("Hockey").get(3).getAnswer();
+//        System.out.println(answer2);
 
         // to access the current question for a category
         // note that the current question should iterate as players answer questions
@@ -45,9 +59,15 @@ public class WheelOfJepordyMain {
 
         // this is how you create the wheel
         Wheel wheel = new Wheel(QuestionBoard);
+
+        // and this is what the wheel looks like
         wheel.printWheel();
 
         // and this is how you spin the wheel to get a random sector
         System.out.println("The sector is: " + wheel.spinWheel());
+
+
+        // you can use the output of the wheel to access the questionBoard,
+        // or to access game logic for sectors like Lose Turn or Bankrupt
     }
 }

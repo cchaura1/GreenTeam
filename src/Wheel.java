@@ -71,14 +71,14 @@
          return this.spinsRemaining;
      }
 
-     /**
-      * Sets the number of spins remaining in this round
-      *
-      * @param spins the number of spins remaining
-      */
-     public void setSpinsRemaining(int spins) {
-         this.spinsRemaining = spins;
-     }
+//     /**
+//      * Sets the number of spins remaining in this round
+//      *
+//      * @param spins the number of spins remaining
+//      */
+//     public void setSpinsRemaining(int spins) {
+//         this.spinsRemaining = spins;
+//     }
 
      /**
       * Debug function for seeing the contents of the wheel
