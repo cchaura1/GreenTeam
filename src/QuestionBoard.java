@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.*;
 
 
@@ -118,33 +119,31 @@ public class QuestionBoard {
      * 
      */
     public void load_board() {
+
         // next put all the tiles into a list
         ArrayList<BoardTile> board_column1 = new ArrayList<BoardTile>();
-        ArrayList<BoardTile> board_column2 = new ArrayList<BoardTile>();
+        int categoryIndex = 0;
     	String line1;
-    	String line2;
-    	URL path1 = QuestionBoard.class.getResource("board1.txt");
-    	URL path2 = QuestionBoard.class.getResource("board2.txt");
-        	File file1 = new File(path1.getFile());
-        	File file2 = new File(path2.getFile());
-        	
+    	
         	try {
+            	URL path1 = Paths.get(System.getProperty("user.dir")+"/board.txt").toUri().toURL();		
+                	File file1 = new File(path1.getFile());
         		reader1 = new BufferedReader(new FileReader(file1));
-				while ((line1 = reader1.readLine()) != null) {
-						String [] d = line1.split(":");
-				board_column1.add(new BoardTile(Integer.parseInt(d[0]),d[1],d[2]));			
+				while ((line1 = reader1.readLine()) != null ) {
+					  if(line1 == null || line1.isEmpty()) {
+						  	line1 = reader1.readLine();
+							String title = line1;		
+							line1 = reader1.readLine();
+							this.currentQuestionDict.put(title, categoryIndex);
+							// then put the list in the dictionary
+					        this.board.put(title, board_column1);
+					        categoryIndex ++;
+					  }
+					
+		 				String [] d = line1.split(":");
+		 				board_column1.add(new BoardTile(Integer.parseInt(d[0]),d[1],d[2]));			
 				}
-				  // then put the list in the dictionary
-		        this.board.put("Space", board_column1);
-		        // and initialize the currentQuestionDict for this category to 0
-		        this.currentQuestionDict.put("Space", 0);
-				reader2 = new BufferedReader(new FileReader(file2));
-				while ((line2 = reader2.readLine()) != null) {
-						String [] d = line2.split(":");
-				board_column2.add(new BoardTile(Integer.parseInt(d[0]),d[1],d[2]));			
-				}
-				this.board.put("Hockey", board_column2);
-		        this.currentQuestionDict.put("Hockey", 0);
+
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

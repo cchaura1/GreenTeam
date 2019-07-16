@@ -1,5 +1,0 @@
-200:What is the seventh planet in the solar system?:Saturn
-400:When will Halleys Comet return to Earth?:2016
-600:How much does a full NASA spacesuit cost (approximately)?:$12,000,000
-800:What was the number of the last Apollo mission?:17
-1000:How many known moons orbit Neptune?:14
