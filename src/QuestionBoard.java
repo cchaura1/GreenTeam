@@ -15,8 +15,6 @@ import java.util.*;
 public class QuestionBoard {
     private HashMap board;
     private HashMap currentQuestionDict;
-	private BufferedReader reader1;
-	private BufferedReader reader2;
 
     // Initialize the board
     QuestionBoard() {
@@ -126,9 +124,8 @@ public class QuestionBoard {
     	String line1;
     	
         	try {
-            	URL path1 = Paths.get(System.getProperty("user.dir")+"/board.txt").toUri().toURL();		
-                	File file1 = new File(path1.getFile());
-        		reader1 = new BufferedReader(new FileReader(file1));
+                BufferedReader reader1 = new BufferedReader(new FileReader(
+                        "src/board.txt"));
 				while ((line1 = reader1.readLine()) != null ) {
 					  if(line1 == null || line1.isEmpty()) {
 						  	line1 = reader1.readLine();
@@ -140,8 +137,8 @@ public class QuestionBoard {
 					        categoryIndex ++;
 					  }
 					
-		 				String [] d = line1.split(":");
-		 				board_column1.add(new BoardTile(Integer.parseInt(d[0]),d[1],d[2]));			
+					  String [] d = line1.split(":");
+					  board_column1.add(new BoardTile(Integer.parseInt(d[0]),d[1],d[2]));
 				}
 
 			} catch (IOException e) {
