@@ -16,7 +16,7 @@
 
          // add each of the question categories to the wheel
          for(String category: board.getBoard().keySet()) {
-             System.out.println("These are the categories: " + category);
+//             System.out.println("These are the categories: " + category);
              this.sectors.add(category);
          }
 
@@ -29,7 +29,7 @@
          this.sectors.add("Double your Score");
 
          // initialize the spins to 50
-         this.spinsRemaining = 50;
+         this.spinsRemaining = 10;
      }
 
      /**

@@ -34,6 +34,35 @@ public class Person {
         this.round2_score += score;
     }
 
+
+    /**
+     * Returns the value of round 1 score to 0
+     */
+    public void bankrupt_round1_score() {
+        this.round1_score = 0;
+    }
+
+    /**
+     * Returns the value of round 2 score to 0
+     */
+    public void bankrupt_round2_score() {
+        this.round2_score = 0;
+    }
+
+    /**
+     * double the value of round 1 score
+     */
+    public void double_round1_score() {
+        this.round1_score += this.round1_score;
+    }
+
+    /**
+     * double the value of round 2 score
+     */
+    public void double_round2_score() {
+        this.round2_score += this.round2_score;
+    }
+
     /**
      * Tally up the player's current total score
      *
@@ -100,6 +129,15 @@ public class Person {
      *
      * @return the person as a readable String
      */
+
+
+    /**
+     * subtracts one free turn from this person
+     */
+    public void useOneFreeTurn() {
+        this.free_turns -= 1;
+    }
+
     public String toString() {
         String personString = "";
 
