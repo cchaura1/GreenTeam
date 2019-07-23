@@ -116,6 +116,45 @@ public class TextView {
         String nothing = input.nextLine();
     }
 
+    public static void indicatePlayersChoice() {
+        System.out.println("\nThe current player will choose a category to answer");
+    }
+
+    public static void indicateOpponentsChoice() {
+        System.out.println("\nThe opposing players will choose a category for the " +
+                "\ncurrent player to answer");
+    }
+
+    public static String getSelectedCategory(QuestionBoard board) {
+        Scanner input = new Scanner(System .in);
+        List<String> categories = board.getAllCategories();
+        String selected_category = "";
+
+        // track if the user inputs an invalid category
+        boolean invalid_category = true;
+
+        // make sure the user inputs a valid category
+        while (invalid_category) {
+            System.out.println("Select which category to answer from the following list: ");
+            for (String cateogry : categories) {
+                System.out.println("    " + cateogry);
+            }
+
+            // get the user input for the selected category
+            selected_category = input.nextLine();
+
+            // check if the category is valid
+            if (categories.contains(selected_category)) {
+                invalid_category = false;
+            } else {
+                System.out.println("This category is invalid, please try again (CaSe SeNsItIvE)\n");
+            }
+        }
+
+        // return the selected category
+        return selected_category;
+    }
+
     public static void endGame(Person winner) {
         System.out.println("The winner of Wheel of Jeopardy is: " + winner.getName());
         System.out.println("Thank you for playing!");

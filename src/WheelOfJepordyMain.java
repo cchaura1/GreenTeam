@@ -51,10 +51,6 @@ public class WheelOfJepordyMain {
             // the current player spins the wheel
             String spun_category = wheel.spinWheel();
 
-//            spun_category = "Hockey";
-//            people.get(0).addOneFreeTurn();
-//            people.get(0).inc_round1_score(500);
-
             // the view shows the result of spinning the wheel
             view.spinWheel(spun_category);
 
@@ -76,16 +72,54 @@ public class WheelOfJepordyMain {
             }
 
             else if (spun_category.equals("Player's Choice")) {
-                System.out.println("This has not been implemented yet");
+                view.indicatePlayersChoice();
+
+//                System.out.println("1. " + board.toString());
+
+                String selected_category  = view.getSelectedCategory(board);
+                BoardTile tile = board.currentTile(selected_category);
+
+//                System.out.println("2. " + board.toString());
+
+                // ask the player hte question and track score
+                boolean was_correct = view.askQuestion(tile);
+                if (was_correct) {
+                    addScoreToPlayer(tile.getValue(), current_player, round);
+                }
+
+//                System.out.println("3. " + board.toString());
+
+                // move to the next question in the category
+                board.incrementCategotry(selected_category);
+                view.updatePeople(people);
+                view.updateBoard(board);
+
+//                System.out.println("4. " + board.toString());
             }
 
             else if (spun_category.equals("Opponent's Choice")) {
-                System.out.println("This has not been implemented yet");
+                view.indicateOpponentsChoice();
+
+                String selectedCategory  = view.getSelectedCategory(board);
+                BoardTile tile = board.currentTile(selectedCategory);
+
+                // ask the player hte question and track score
+                boolean was_correct = view.askQuestion(tile);
+                if (was_correct) {
+                    addScoreToPlayer(tile.getValue(), current_player, round);
+                }
+
+                // move to the next question in the category
+                board.incrementCategotry(selectedCategory);
+                view.updatePeople(people);
+                view.updateBoard(board);
             }
 
             // check if the spun category is a jeopardy question
             else if (wheel.getSectors().contains(spun_category)) {
                 BoardTile tile = board.currentTile(spun_category);
+
+                // ask the player hte question and track score
                 boolean was_correct = view.askQuestion(tile);
                 if (was_correct) {
                     addScoreToPlayer(tile.getValue(), current_player, round);
@@ -99,7 +133,7 @@ public class WheelOfJepordyMain {
             }
 
             else {
-                System.out.println("This is not a category");
+                System.out.println("ERROR: This is not a category");
             }
 
             // turn is over, move to next player if there is no token used

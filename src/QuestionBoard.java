@@ -2,6 +2,7 @@
  * This class represents the jepordy-style board of questions
  */
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class QuestionBoard {
@@ -102,6 +103,22 @@ public class QuestionBoard {
     }
 
     /**
+     * get the categories for the board
+     *
+     * @return the list of categories
+     */
+    public List<String> getAllCategories() {
+        ArrayList<String> categories = new ArrayList<String>();
+
+        // add all the categories for the board
+        for(String key: this.getBoard().keySet()) {
+            categories.add(key);
+        }
+
+        return categories;
+    }
+
+    /**
      * Load the board
      *
      * ******* This is just an example, we should load from a file **********
@@ -181,6 +198,15 @@ public class QuestionBoard {
     }
 
     /**
+     * get the current question dict
+     *
+     * @return the current question dict
+     */
+    public HashMap<String, Integer> getCurrentQuestionDict() {
+        return this.currentQuestionDict;
+    }
+
+    /**
      * get the the contents of the board as a readable string
      *
      * @returns a string representation of the board
@@ -193,6 +219,9 @@ public class QuestionBoard {
         for (Object key : this.board.keySet()) {
             boardString += ("-----------------------------------\n");
             boardString += ("Category: \n" + key.toString() + "\n");
+
+            boardString += ("Current index is: " +
+                    Integer.valueOf(this.getCurrentQuestionDict().get(key))) + "\n";
 
             // get the question column for the given category
             List<BoardTile> column = new ArrayList<BoardTile>();
