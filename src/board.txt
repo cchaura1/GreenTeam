@@ -1,0 +1,21 @@
+
+Space
+200:What is the seventh planet in the solar system?:Saturn
+400:When will Halleys Comet return to Earth?:2061
+600:How much does a full NASA spacesuit cost (approximately)?:$12,000,000
+800:What was the number of the last Apollo mission?:17
+1000:How many known moons orbit Neptune?:14
+
+Hockey
+200:Which NHL player has the most career points?:Wayne Gretzky
+400:Who is the winningest NHL goalie of all time:Martain Brodeur
+600:What is the term for a goal, an assist, and a fight in one game?:Gordie Howe Hat Trick
+800:Who shot the fastest puck in recorded history?:Bobby Hull (rec. 118.3 mph)
+1000:Which NHL player holds the record for the most points in a single game?:Darryl Sittler
+
+Lakes & Rivers
+200:What is the river most often mentioned in the bible?:The Jordan
+400:What is the Scottish word for Lake?:Loch
+600:Which American river is only 30 miles shorter than the Mississippi?:The Missouri River
+800:What is the World's largest lake:The Caspian Sea
+1000:What is the longest river in the word?:The Nile

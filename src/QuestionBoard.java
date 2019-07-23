@@ -2,8 +2,15 @@
  * This class represents the jepordy-style board of questions
  */
 
-import java.lang.reflect.Array;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.util.*;
+
 
 public class QuestionBoard {
     private HashMap board;
@@ -123,8 +130,12 @@ public class QuestionBoard {
      *
      * ******* This is just an example, we should load from a file **********
      * Feel very free to update the questions...
+     * 
      */
     public void load_board() {
+
+        // working code (not reading from a file though)
+
         // first create 5 board tiles (to make up a single category)
         BoardTile tile1 = new BoardTile(200,
                 "What is the seventh planet in the solar system?",
@@ -156,7 +167,7 @@ public class QuestionBoard {
         // and initialize the currentQuestionDict for this category to 0
         this.currentQuestionDict.put("Space", 0);
 
-        // and do everything again:
+        // and do everything again: (probably best to loop)
         BoardTile tile6 = new BoardTile(200,
                 "Which NHL player has the most career points?",
                 "Wayne Gretzky");
@@ -186,6 +197,38 @@ public class QuestionBoard {
 
         // do a few more times (6) to make a full board
         // can wrap into a loop if you have a properly formatted file
+
+
+
+        // Below is Chetan's code
+
+//        ArrayList<BoardTile> board_column1 = new ArrayList<BoardTile>();
+//        int categoryIndex = 0;
+//    	String line1;
+//
+//        	try {
+//                BufferedReader reader1 = new BufferedReader(new FileReader(
+//                        "src/board.txt"));
+//				while ((line1 = reader1.readLine()) != null ) {
+//					  if(line1 == null || line1.isEmpty()) {
+//						  	line1 = reader1.readLine();
+//							String title = line1;
+//							line1 = reader1.readLine();
+//							this.currentQuestionDict.put(title, categoryIndex);
+//							// then put the list in the dictionary
+//					        this.board.put(title, board_column1);
+//					        categoryIndex ++;
+//					  }
+//
+//					  String [] d = line1.split(":");
+//					  board_column1.add(new BoardTile(Integer.parseInt(d[0]),d[1],d[2]));
+//				}
+//
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+
     }
 
     /**

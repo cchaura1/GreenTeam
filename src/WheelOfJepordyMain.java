@@ -22,12 +22,6 @@ public class WheelOfJepordyMain {
         // initialize the game
         view.initialize();
 
-
-        // debug lines
-//        for (Person person: people) {
-//            System.out.println(person.toString());
-//        }
-
         // initialize the game
         boolean continue_game = true;
         Person current_player = people.get(0);
@@ -37,6 +31,9 @@ public class WheelOfJepordyMain {
         // create the board and wheel for round 1
         QuestionBoard board = new QuestionBoard();
         Wheel wheel = new Wheel(board);
+
+        // debug to make sure the board looks good
+        System.out.println("Board: \n" + board.toString());
 
 
         // game loop
