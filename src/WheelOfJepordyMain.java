@@ -2,12 +2,18 @@
  * This is the main class, runs the game
  */
 
+
+
+
+
+import javafx.application.Application;
+import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WheelOfJepordyMain {
+public class WheelOfJepordyMain extends Application {
 
     // this is the view
     // when we want to switch to Chetan's GUI we can just hot swap the views
@@ -19,6 +25,9 @@ public class WheelOfJepordyMain {
 
     public static void main(String args[]) {
 
+    	gui ob = new gui();
+    	ob.launch(args);
+    	
         // initialize the game
         view.initialize();
 
@@ -386,4 +395,11 @@ public class WheelOfJepordyMain {
 
         return winner;
     }
+
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		// TODO Auto-generated method stub
+		gui obj = new gui();
+		obj.start(primaryStage);
+	}
 }
