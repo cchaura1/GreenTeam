@@ -98,11 +98,12 @@ public class gui extends Application {
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("Hello World!");
-             
+                //Set the wheel animation to play here
+              //  nextTimeline.play();
             }
         });
 		// nextTimeline.setDelay(Duration.seconds(10));
-		//nextTimeline.play();
+		nextTimeline.play();
 	}
 	
 	private Timeline createTimeline(final Pane root, final KeyFrame duration, final Timeline nextTimeline) {
