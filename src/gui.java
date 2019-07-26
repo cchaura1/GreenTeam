@@ -1,3 +1,6 @@
+import javafx.scene.control.Button;
+import java.awt.Dimension;
+import java.awt.Insets;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -15,7 +18,9 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -49,14 +54,10 @@ public class gui extends Application {
 			name.setUserData(new Integer(pos++));
 		}
 	
-		// Calculate all points where the names should be positioned.
+
 		points = calculatePoints(WOJCategories.size(), WOJ_CENTER_X, WOJ_CENTER_Y, ORBIT);
 	
-		// Number of rotations per timeline
 		int cyclesPerTimeline = 10;
-	
-		// Create recursive timeline to slow down the wheel
-		// Timeline chaining
 		Timeline nextTimeline = null;
 		
 		for (int numberOfTimelines = 5; numberOfTimelines > 0; numberOfTimelines--) {
@@ -76,17 +77,32 @@ public class gui extends Application {
 	    rectangle.setArcHeight(20.0); 
 		mainPane.getChildren().add(rectangle);
 		
-		
 		mainPane.getChildren().addAll(WOJCategories);
 	
-		Scene scene = new Scene(mainPane, Screen_WIDHT, Screen_Height);
+		Button btn = new Button("Spin");
+		
+		StackPane layout = new StackPane();
+        layout.getChildren().add(btn);
+        mainPane.getChildren().add(layout);
 	
-		primaryStage.setTitle("Lottery Wheel");
+		Scene scene = new Scene(mainPane, Screen_WIDHT, Screen_Height);
+		
+	
+		
+		
+		primaryStage.setTitle("Wheel Of Jeopardy");
 		primaryStage.setScene(scene);	
 		primaryStage.show();
 
+		btn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("Hello World!");
+             
+            }
+        });
 		// nextTimeline.setDelay(Duration.seconds(10));
-		nextTimeline.play();
+		//nextTimeline.play();
 	}
 	
 	private Timeline createTimeline(final Pane root, final KeyFrame duration, final Timeline nextTimeline) {
@@ -126,23 +142,6 @@ public class gui extends Application {
 			formatText(name, nextPoint);
 	
 			ParallelTransition parallelTransition = new ParallelTransition();
-			if (nextPoint.position==0) {
-				// Make the text invisible
-				FadeTransition fadeTransition = new FadeTransition(duration.getTime(), name);
-				fadeTransition.setFromValue(1.0f);
-				fadeTransition.setToValue(0.3f);
-				parallelTransition.getChildren().add(fadeTransition);
-			} else if(nextPoint.position==1) {
-				// Show the name at the arrow 
-			//	arrowText.setText(name.getText());
-				
-				// Make the text visible
-				FadeTransition fadeTransition = new FadeTransition(duration.getTime(), name);
-				fadeTransition.setFromValue(0.3f);
-				fadeTransition.setToValue(1f);
-				parallelTransition.getChildren().add(fadeTransition);
-			}
-	
 			parallelTransition.getChildren().add(move);
 			parallelTransition.playFromStart();
 	
