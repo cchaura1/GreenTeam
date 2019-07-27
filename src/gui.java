@@ -37,7 +37,7 @@ public class gui extends Application {
 
 	private static final int WOJ_CENTER_X = Screen_WIDHT / 2;
 	private static final int WOJ_CENTER_Y = Screen_Height / 2;
-	private static final double ORBIT = 350;
+	private static final double ORBIT = 250;
 	private static final int FONT_SIZE = 8;
 
 	private static final List<Text> WOJCategories = new ArrayList<>();
@@ -69,7 +69,7 @@ public class gui extends Application {
 
 		Rectangle rectangle = new Rectangle();
 		rectangle.setFill(Color.GREENYELLOW);
-		rectangle.setX(240);
+		rectangle.setX(340);
 		rectangle.setY((Screen_Height-75)/2);
 		rectangle.setWidth(150);
 		rectangle.setHeight(60);
@@ -79,11 +79,11 @@ public class gui extends Application {
 		
 		mainPane.getChildren().addAll(WOJCategories);
 	
-		Button btn = new Button("Spin");
 		
-		StackPane layout = new StackPane();
-        layout.getChildren().add(btn);
-        mainPane.getChildren().add(layout);
+//		
+//		StackPane layout = new StackPane();
+//        layout.getChildren().add(btn);
+//        mainPane.getChildren().add(layout);
 	
 		Scene scene = new Scene(mainPane, Screen_WIDHT, Screen_Height);
 		
@@ -94,15 +94,9 @@ public class gui extends Application {
 		primaryStage.setScene(scene);	
 		primaryStage.show();
 
-		btn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-                //Set the wheel animation to play here
-              //  nextTimeline.play();
-            }
-        });
-		// nextTimeline.setDelay(Duration.seconds(10));
+	//	mainPane.getChildren().add(btn);
+		
+
 		nextTimeline.play();
 	}
 	
@@ -115,16 +109,26 @@ public class gui extends Application {
 			}
 		}), duration);
 	
-		// Start next timeline on finish
+		Button btn = new Button("Spin");
 		timeline.setOnFinished(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				if (nextTimeline != null) {
-					// Start the next timeline
 					nextTimeline.play();
 				} 
 			};
 		});
-	
+		root.getChildren().add(btn);
+		btn.setPrefWidth(120);
+		btn.setPrefHeight(50);
+		btn.setLayoutX(50);
+		btn.setLayoutY((Screen_Height-75)/2);
+		btn.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				//Set the wheel animation to play here
+				  nextTimeline.play();
+			}
+		});
 		return timeline;
 	}
 
