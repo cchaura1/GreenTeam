@@ -34,12 +34,10 @@ public class gui extends Application {
 
 	private static final int Screen_Height = 800;
 	private static final int Screen_WIDHT = 1200;
-
 	private static final int WOJ_CENTER_X = Screen_WIDHT / 2;
 	private static final int WOJ_CENTER_Y = Screen_Height / 2;
 	private static final double ORBIT = 250;
 	private static final int FONT_SIZE = 8;
-
 	private static final List<Text> WOJCategories = new ArrayList<>();
 	private List<Point> points;
 	
@@ -54,7 +52,6 @@ public class gui extends Application {
 			name.setUserData(new Integer(pos++));
 		}
 	
-
 		points = calculatePoints(WOJCategories.size(), WOJ_CENTER_X, WOJ_CENTER_Y, ORBIT);
 	
 		int cyclesPerTimeline = 10;
@@ -66,7 +63,6 @@ public class gui extends Application {
 			nextTimeline.setCycleCount(cyclesPerTimeline);
 		}
 	
-
 		Rectangle rectangle = new Rectangle();
 		rectangle.setFill(Color.GREENYELLOW);
 		rectangle.setX(340);
@@ -75,28 +71,12 @@ public class gui extends Application {
 		rectangle.setHeight(60);
 		rectangle.setArcWidth(30.0); 
 	    rectangle.setArcHeight(20.0); 
-		mainPane.getChildren().add(rectangle);
-		
+		mainPane.getChildren().add(rectangle);		
 		mainPane.getChildren().addAll(WOJCategories);
-	
-		
-//		
-//		StackPane layout = new StackPane();
-//        layout.getChildren().add(btn);
-//        mainPane.getChildren().add(layout);
-	
-		Scene scene = new Scene(mainPane, Screen_WIDHT, Screen_Height);
-		
-	
-		
-		
+		Scene scene = new Scene(mainPane, Screen_WIDHT, Screen_Height);	
 		primaryStage.setTitle("Wheel Of Jeopardy");
 		primaryStage.setScene(scene);	
 		primaryStage.show();
-
-	//	mainPane.getChildren().add(btn);
-		
-
 		nextTimeline.play();
 	}
 	
@@ -144,14 +124,11 @@ public class gui extends Application {
 					.duration(duration.getTime())
 					.build();
 	
-			formatText(name, nextPoint);
-	
+			formatText(name, nextPoint);	
 			ParallelTransition parallelTransition = new ParallelTransition();
 			parallelTransition.getChildren().add(move);
-			parallelTransition.playFromStart();
-	
+			parallelTransition.playFromStart();	
 			name.setUserData(((Integer) name.getUserData()) + 1);
-	
 			if (((Integer) name.getUserData()) > points.size() - 1) {
 				name.setUserData(0);
 			}
@@ -210,8 +187,6 @@ public class gui extends Application {
 			p.angle = degreeStart;
 			pointList.add(p);
 		}
-
 		return pointList;
-	}
-	
+	}	
 }
