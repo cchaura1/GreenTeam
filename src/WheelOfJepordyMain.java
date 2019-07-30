@@ -29,7 +29,7 @@ public class WheelOfJepordyMain {
         boolean use_free_turn = false;
 
         // create the board and wheel for round 1
-        QuestionBoard board = new QuestionBoard();
+        QuestionBoard board = new QuestionBoard("src/board1.txt");
         Wheel wheel = new Wheel(board);
 
         // debug to make sure the board looks good
@@ -144,7 +144,7 @@ public class WheelOfJepordyMain {
             // check if we should continue the round
             if (wheel.getSpinsRemaining() <= 0) {
                 round += 1;
-                board = new QuestionBoard();
+                board = new QuestionBoard("src/board2.txt");
                 wheel = new Wheel(board);
             }
 

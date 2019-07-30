@@ -17,7 +17,7 @@ public class QuestionBoard {
     private HashMap currentQuestionDict;
 
     // Initialize the board
-    QuestionBoard() {
+    QuestionBoard(String board_location) {
 
         /**
          * The board is represented as a dictionary
@@ -36,7 +36,7 @@ public class QuestionBoard {
         this.currentQuestionDict = new HashMap<String, Integer>();
 
         // set up the board
-        load_board();
+        load_board(board_location);
 
         // the initializer can be updated to read from a file instead of empty initializer
     }
@@ -132,7 +132,7 @@ public class QuestionBoard {
      * Feel very free to update the questions...
      * 
      */
-    public void load_board() {
+    public void load_board(String fname) {
 
         // working code (not reading from a file though)
 

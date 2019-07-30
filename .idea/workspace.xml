@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bbab6129-89ac-4a6e-aa73-015e0bdad1dd" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/board.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WheelOfJepordy/QuestionBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WheelOfJepordy/QuestionBoard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WheelOfJepordy/WheelOfJepordyMain.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WheelOfJepordy/WheelOfJepordyMain.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/QuestionBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/QuestionBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/WheelOfJepordyMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/WheelOfJepordyMain.java" afterDir="false" />
-    </list>
+    <list default="true" id="bbab6129-89ac-4a6e-aa73-015e0bdad1dd" name="Default" comment="" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,8 +16,8 @@
       <file leaf-file-name="WheelOfJepordyMain.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/WheelOfJepordyMain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="34" column="59" selection-start-line="34" selection-start-column="59" selection-end-line="34" selection-end-column="59" />
+            <state relative-caret-position="146">
+              <caret line="365" column="7" lean-forward="true" selection-start-line="365" selection-start-column="7" selection-end-line="365" selection-end-column="7" />
               <folding>
                 <element signature="e#0#2760#0" expanded="true" />
                 <element signature="imports" expanded="true" />
@@ -33,11 +26,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TextView.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TextView.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/TextView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="129" column="56" selection-start-line="129" selection-start-column="40" selection-end-line="129" selection-end-column="56" />
+            <state relative-caret-position="180">
+              <caret line="143" column="40" selection-start-line="143" selection-start-column="40" selection-end-line="143" selection-end-column="40" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#341#349#0" expanded="true" />
@@ -46,15 +39,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="QuestionBoard.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="QuestionBoard.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/QuestionBoard.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="97">
-              <caret line="140" column="8" lean-forward="true" selection-start-line="140" selection-start-column="8" selection-end-line="140" selection-end-column="8" />
+            <state relative-caret-position="565">
+              <caret line="202" column="33" lean-forward="true" selection-start-line="202" selection-start-column="33" selection-end-line="202" selection-end-column="33" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#4083#4091#0" expanded="true" />
-                <element signature="e#4590#4601#0" expanded="true" />
+                <element signature="e#5268#5279#0" expanded="true" />
+                <element signature="e#6560#6571#0" expanded="true" />
                 <element signature="e#6513#6514#0" expanded="true" />
                 <element signature="e#6546#6547#0" expanded="true" />
                 <element signature="e#7556#7567#0" expanded="true" />
@@ -132,11 +126,16 @@
         <option value="$PROJECT_DIR$/src/Wheel.java" />
         <option value="$PROJECT_DIR$/src/TextView.java" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/src/QuestionBoard.java" />
         <option value="$PROJECT_DIR$/src/board.txt" />
+        <option value="$PROJECT_DIR$/src/QuestionBoard.java" />
         <option value="$PROJECT_DIR$/src/WheelOfJepordyMain.java" />
       </list>
     </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="952" />
+    <option name="width" value="977" />
+    <option name="height" value="1038" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -259,12 +258,12 @@
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="3" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32276657" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3371758" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17475729" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17475729" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
@@ -306,7 +305,8 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#4083#4091#0" expanded="true" />
-            <element signature="e#4590#4601#0" expanded="true" />
+            <element signature="e#5268#5279#0" expanded="true" />
+            <element signature="e#6560#6571#0" expanded="true" />
             <element signature="e#6513#6514#0" expanded="true" />
             <element signature="e#6546#6547#0" expanded="true" />
             <element signature="e#7556#7567#0" expanded="true" />
@@ -437,7 +437,8 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#4083#4091#0" expanded="true" />
-            <element signature="e#4590#4601#0" expanded="true" />
+            <element signature="e#5268#5279#0" expanded="true" />
+            <element signature="e#6560#6571#0" expanded="true" />
             <element signature="e#6513#6514#0" expanded="true" />
             <element signature="e#6546#6547#0" expanded="true" />
             <element signature="e#7556#7567#0" expanded="true" />
@@ -459,7 +460,8 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#4083#4091#0" expanded="true" />
-            <element signature="e#4590#4601#0" expanded="true" />
+            <element signature="e#5268#5279#0" expanded="true" />
+            <element signature="e#6560#6571#0" expanded="true" />
             <element signature="e#6513#6514#0" expanded="true" />
             <element signature="e#6546#6547#0" expanded="true" />
             <element signature="e#7556#7567#0" expanded="true" />
@@ -639,21 +641,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/TextView.java">
+    <entry file="file://$PROJECT_DIR$/src/QuestionBoard.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="129" column="56" selection-start-line="129" selection-start-column="40" selection-end-line="129" selection-end-column="56" />
+        <state relative-caret-position="565">
+          <caret line="202" column="33" lean-forward="true" selection-start-line="202" selection-start-column="33" selection-end-line="202" selection-end-column="33" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#341#349#0" expanded="true" />
+            <element signature="e#4083#4091#0" expanded="true" />
+            <element signature="e#5268#5279#0" expanded="true" />
+            <element signature="e#6560#6571#0" expanded="true" />
+            <element signature="e#6513#6514#0" expanded="true" />
+            <element signature="e#6546#6547#0" expanded="true" />
+            <element signature="e#7556#7567#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/WheelOfJepordyMain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="34" column="59" selection-start-line="34" selection-start-column="59" selection-end-line="34" selection-end-column="59" />
+        <state relative-caret-position="146">
+          <caret line="365" column="7" lean-forward="true" selection-start-line="365" selection-start-column="7" selection-end-line="365" selection-end-column="7" />
           <folding>
             <element signature="e#0#2760#0" expanded="true" />
             <element signature="imports" expanded="true" />
@@ -661,17 +668,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/QuestionBoard.java">
+    <entry file="file://$PROJECT_DIR$/src/TextView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="97">
-          <caret line="140" column="8" lean-forward="true" selection-start-line="140" selection-start-column="8" selection-end-line="140" selection-end-column="8" />
+        <state relative-caret-position="180">
+          <caret line="143" column="40" selection-start-line="143" selection-start-column="40" selection-end-line="143" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4083#4091#0" expanded="true" />
-            <element signature="e#4590#4601#0" expanded="true" />
-            <element signature="e#6513#6514#0" expanded="true" />
-            <element signature="e#6546#6547#0" expanded="true" />
-            <element signature="e#7556#7567#0" expanded="true" />
+            <element signature="e#341#349#0" expanded="true" />
           </folding>
         </state>
       </provider>
