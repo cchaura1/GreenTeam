@@ -77,20 +77,27 @@ public class TextView {
         }
     }
 
-    public static boolean askQuestion(BoardTile tile) {
+    public static String askQuestion(BoardTile tile) {
         Scanner input = new Scanner(System .in);
-        boolean is_correct = false;
+        String is_correct = "";
 
         System.out.println("For " + String.valueOf(tile.getValue()) + " points.. ");
         System.out.println(tile.getQuestion());
         System.out.print("\nPress ENTER when the question has been answered: ");
         String nothing = input.nextLine();
-        System.out.println("The correct answer is: " + tile.getAnswer());
-        System.out.print("\nWas the answer correct? (y or n): ");
-        String is_correct_string = input.next();
 
-        if (is_correct_string.equals("y")) {
-            is_correct = true;
+        while (is_correct == "") {
+            System.out.println("The correct answer is: " + tile.getAnswer());
+            System.out.print("\nWas the answer correct? (y=yes, n=no, p=pass): ");
+            String is_correct_string = input.next();
+
+            if (is_correct_string.equals("y") || is_correct_string.equals("n")
+                || is_correct_string.equals("p")) {
+                is_correct = is_correct_string;
+            }
+            else {
+                is_correct = "";
+            }
         }
 
         return is_correct;

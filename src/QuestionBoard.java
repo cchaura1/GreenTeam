@@ -225,7 +225,6 @@ public class QuestionBoard {
 //				}
 //
 //			} catch (IOException e) {
-//				// TODO Auto-generated catch block
 //				e.printStackTrace();
 //			}
 
