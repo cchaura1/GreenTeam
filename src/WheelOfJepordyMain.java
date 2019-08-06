@@ -26,7 +26,7 @@ public class WheelOfJepordyMain {
         boolean use_free_turn = false;
 
         // create the board and wheel for round 1
-        QuestionBoard board = new QuestionBoard("src/board1.txt");
+        QuestionBoard board = new QuestionBoard("src/board.json", round);
         Wheel wheel = new Wheel(board);
 
         // debug to make sure the board looks good
@@ -158,7 +158,7 @@ public class WheelOfJepordyMain {
             // check if we should continue the round
             if (isRoundOver(board, wheel)) {
                 round += 1;
-                board = new QuestionBoard("src/board2.txt");
+                board = new QuestionBoard("src/board.json", round);
                 wheel = new Wheel(board);
             }
 

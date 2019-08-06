@@ -1,0 +1,101 @@
+{
+  "round1": {
+    "categories": [
+      {
+        "name": "Space",
+        "questions": [
+          {
+            "value": 200,
+            "question" : "What is the seventh planet in the solar system?",
+            "answer" : "Saturn"
+          },
+          {
+            "value": 400,
+            "question" : "When will Halleys Comet return to Earth?",
+            "answer" : "2061"
+          },
+          {
+            "value": 600,
+            "question" : "How much does a full NASA spacesuit cost (approximately)?",
+            "answer" : "$12,000,000"
+          },
+          {
+            "value": 800,
+            "question" : "What was the number of the last Apollo mission?",
+            "answer" : "17"
+          },
+          {
+            "value": 1000,
+            "question" : "How many known moons orbit Neptune?",
+            "answer" : "14"
+          }
+        ]
+      },
+      {
+        "name": "Hockey",
+        "questions": [
+          {
+            "value": 200,
+            "question" : "Which NHL player has the most career points?",
+            "answer" : "Wayne Gretzky"
+          },
+          {
+            "value": 400,
+            "question" : "Who is the winningest NHL goalie of all time",
+            "answer" : "Martain Brodeur"
+          },
+          {
+            "value": 600,
+            "question" : "What is the term for a goal, an assist, and a fight in one game?",
+            "answer" : "Gordie Howe Hat Trick"
+          },
+          {
+            "value": 800,
+            "question" : "Who shot the fastest puck in recorded history?",
+            "answer" : "Bobby Hull (rec. 118.3 mph)"
+          },
+          {
+            "value": 1000,
+            "question" : "Which NHL player holds the record for the most points in a single game?",
+            "answer" : "Darryl Sittler"
+          }
+        ]
+      }
+
+    ]
+  },
+  "round2": {
+    "categories": [
+      {
+        "name": "Lakes & Rivers",
+        "questions": [
+          {
+            "value": 200,
+            "question" : "What is the river most often mentioned in the bible?",
+            "answer" : "The Jordan"
+          },
+          {
+            "value": 400,
+            "question" : "What is the Scottish word for Lake?",
+            "answer" : "Loch"
+          },
+          {
+            "value": 600,
+            "question" : "Which American river is only 30 miles shorter than the Mississippi?",
+            "answer" : "The Missouri River"
+          },
+          {
+            "value": 800,
+            "question" : "What is the World's largest lake",
+            "answer" : "The Caspian Sea"
+          },
+          {
+            "value": 1000,
+            "question" : "What is the longest river in the word?",
+            "answer" : "The Nile"
+          }
+        ]
+      }
+    ]
+  }
+}
