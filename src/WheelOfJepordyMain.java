@@ -32,7 +32,6 @@ public class WheelOfJepordyMain {
         // debug to make sure the board looks good
         System.out.println("Board: \n" + board.toString());
 
-
         // game loop
         while (continue_game) {
 
