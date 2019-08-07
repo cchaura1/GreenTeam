@@ -26,11 +26,11 @@ public class WheelOfJepordyMain {
         boolean use_free_turn = false;
 
         // create the board and wheel for round 1
-        QuestionBoard board = new QuestionBoard("src/board.json", round);
+        QuestionBoard board = new QuestionBoard("src/board1.json", round);
         Wheel wheel = new Wheel(board);
 
         // debug to make sure the board looks good
-        System.out.println("Board: \n" + board.toString());
+        //System.out.println("Board: \n" + board.toString());
 
         // game loop
         while (continue_game) {
@@ -157,7 +157,7 @@ public class WheelOfJepordyMain {
             // check if we should continue the round
             if (isRoundOver(board, wheel)) {
                 round += 1;
-                board = new QuestionBoard("src/board.json", round);
+                board = new QuestionBoard("src/board1.json", round);
                 wheel = new Wheel(board);
             }
 
@@ -197,7 +197,8 @@ public class WheelOfJepordyMain {
         for (String category: board.getAllCategories()) {
             if (board.getCurrentQuestionDict().get(category) <= 4) {
                 is_over_categories = false;
-                System.out.println("NOT OVER B/C " + category + " is not empty");
+                // Print for error checking only
+                //System.out.println("NOT OVER B/C " + category + " is not empty");
             }
         }
 

@@ -29,7 +29,7 @@
          this.sectors.add("Double your Score");
 
          // initialize the spins to 50
-         this.spinsRemaining = 100;
+         this.spinsRemaining = 50;
      }
 
      /**

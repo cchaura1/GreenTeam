@@ -84,6 +84,7 @@ public class TextView {
         System.out.println("For " + String.valueOf(tile.getValue()) + " points.. ");
         System.out.println(tile.getQuestion());
         System.out.print("\nPress ENTER when the question has been answered: ");
+
         String nothing = input.nextLine();
 
         while (is_correct == "") {
