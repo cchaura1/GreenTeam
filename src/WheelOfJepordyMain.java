@@ -3,13 +3,9 @@
  */
 
 
-
-
-
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.util.Pair;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,12 +34,11 @@ public class WheelOfJepordyMain extends Application {
         boolean use_free_turn = false;
 
         // create the board and wheel for round 1
-        QuestionBoard board = new QuestionBoard();
+        QuestionBoard board = new QuestionBoard("src/board1.json", round);
         Wheel wheel = new Wheel(board);
 
         // debug to make sure the board looks good
-        System.out.println("Board: \n" + board.toString());
-
+        //System.out.println("Board: \n" + board.toString());
 
         // game loop
         while (continue_game) {
@@ -55,7 +50,7 @@ public class WheelOfJepordyMain extends Application {
             view.updateWheelCounter(wheel);
 
             // the current player spins the wheel
-            String spun_category = wheel.spinWheel();
+            String spun_category = wheel.spinWheel(board);
 
             // the view shows the result of spinning the wheel
             view.spinWheel(spun_category);
@@ -88,12 +83,17 @@ public class WheelOfJepordyMain extends Application {
 //                System.out.println("2. " + board.toString());
 
                 // ask the player hte question and track score
-                boolean was_correct = view.askQuestion(tile);
-                if (was_correct) {
+                String was_correct = view.askQuestion(tile);
+
+                // if the answer was correct add the score to the player
+                if (was_correct.equals("y")) {
                     addScoreToPlayer(tile.getValue(), current_player, round);
                 }
-
-//                System.out.println("3. " + board.toString());
+                // if the answer was wrong subtract the score from the player
+                else if (was_correct.equals("n")) {
+                    addScoreToPlayer(-1 * tile.getValue(), current_player, round);
+                }
+                // if the answer was p do not add any score
 
                 // move to the next question in the category
                 board.incrementCategotry(selected_category);
@@ -110,10 +110,16 @@ public class WheelOfJepordyMain extends Application {
                 BoardTile tile = board.currentTile(selectedCategory);
 
                 // ask the player hte question and track score
-                boolean was_correct = view.askQuestion(tile);
-                if (was_correct) {
+                String was_correct = view.askQuestion(tile);
+                // if the answer was correct add the score to the player
+                if (was_correct.equals("y")) {
                     addScoreToPlayer(tile.getValue(), current_player, round);
                 }
+                // if the answer was wrong subtract the score from the player
+                else if (was_correct.equals("n")) {
+                    addScoreToPlayer(-1 * tile.getValue(), current_player, round);
+                }
+                // if the answer was p do not add any score
 
                 // move to the next question in the category
                 board.incrementCategotry(selectedCategory);
@@ -126,10 +132,16 @@ public class WheelOfJepordyMain extends Application {
                 BoardTile tile = board.currentTile(spun_category);
 
                 // ask the player hte question and track score
-                boolean was_correct = view.askQuestion(tile);
-                if (was_correct) {
+                String was_correct = view.askQuestion(tile);
+                // if the answer was correct add the score to the player
+                if (was_correct.equals("y")) {
                     addScoreToPlayer(tile.getValue(), current_player, round);
                 }
+                // if the answer was wrong subtract the score from the player
+                else if (was_correct.equals("n")) {
+                    addScoreToPlayer(-1 * tile.getValue(), current_player, round);
+                }
+                // if the answer was p do not add any score
 
                 // move to the next question in the category
                 board.incrementCategotry(spun_category);
@@ -151,9 +163,9 @@ public class WheelOfJepordyMain extends Application {
             use_free_turn = false;
 
             // check if we should continue the round
-            if (wheel.getSpinsRemaining() <= 0) {
+            if (isRoundOver(board, wheel)) {
                 round += 1;
-                board = new QuestionBoard();
+                board = new QuestionBoard("src/board1.json", round);
                 wheel = new Wheel(board);
             }
 
@@ -169,70 +181,42 @@ public class WheelOfJepordyMain extends Application {
         Person winner = getWinner();
         view.endGame(winner);
 
+    }
 
-//        // demo code...
-//
-//        // we can create some Person objects like so:
-////        Person Chetan = new Person("Chetan");
-////        Person Mike = new Person("Mike");
-////        Person Paul = new Person("Paul");
-////        Person Brian = new Person("Brian");
-////
-////        System.out.println("Person - Chetan: \n" + Chetan.toString());
-////        System.out.println("Person - Mike: \n" + Mike.toString());
-////        System.out.println("Person - Paul: \n" + Paul.toString());
-////        System.out.println("Person - Brian: \n" + Brian.toString());
-//
-//
-//        // this is how you create the board
-////        QuestionBoard QuestionBoard = new QuestionBoard();
-//
-//        // show the board contents
-//        System.out.println(QuestionBoard.toString());
-//
-//        // one way to access values from the board
-////        String question1 = QuestionBoard.getBoard().get("Space").get(0).getQuestion();
-////        System.out.println(question1);
-////        String answer1 = QuestionBoard.getBoard().get("Space").get(0).getAnswer();
-////        System.out.println(answer1);
-////
-////        String question2 = QuestionBoard.getBoard().get("Hockey").get(3).getQuestion();
-////        System.out.println(question2);
-////
-////        String answer2 = QuestionBoard.getBoard().get("Hockey").get(3).getAnswer();
-////        System.out.println(answer2);
-//
-//        // to access the current question for a category
-//        // note that the current question should iterate as players answer questions
-//        // to start the current question is the first question
-//        System.out.println(QuestionBoard.currentQuestion("Hockey"));
-//
-//        // now get the answer for the category
-//        System.out.println(QuestionBoard.currentAnswer("Hockey"));
-//
-//        // then increment to the next question
-//        QuestionBoard.incrementCategotry("Hockey");
-//
-//        // And now we can access the next question:
-//        System.out.println(QuestionBoard.currentQuestion("Hockey"));
-//        System.out.println(QuestionBoard.currentAnswer("Hockey"));
-//        System.out.println(QuestionBoard.currentQuestionValue("Hockey"));
-//        System.out.println(QuestionBoard.currentTile("Hockey"));
-//        QuestionBoard.incrementCategotry("Hockey");
-//
-//
-//        // this is how you create the wheel
-//        Wheel wheel = new Wheel(QuestionBoard);
-//
-//        // and this is what the wheel looks like
-//        wheel.printWheel();
-//
-//        // and this is how you spin the wheel to get a random sector
-//        System.out.println("The sector is: " + wheel.spinWheel());
+    /**
+     * Check if the round is over
+     *
+     * @param board the board for the game
+     * @param wheel the wheel for the game
+     *
+     * @return if the round is over
+     */
+    public static boolean isRoundOver(QuestionBoard board, Wheel wheel) {
+        boolean is_over_spins = true;
+        boolean is_over_categories = true;
+        boolean is_over = false;
 
+        // check if there are spins remaining in the wheel
+        if (wheel.getSpinsRemaining() > 0) {
+            is_over_spins = false;
+        }
 
-        // you can use the output of the wheel to access the questionBoard,
-        // or to access game logic for sectors like Lose Turn or Bankrupt
+        // check if any of the categories have tiles remaining
+        for (String category: board.getAllCategories()) {
+            if (board.getCurrentQuestionDict().get(category) <= 4) {
+                is_over_categories = false;
+                // Print for error checking only
+                //System.out.println("NOT OVER B/C " + category + " is not empty");
+            }
+        }
+
+        // if either the wheel is out of spins or the board is empty: round over
+        if (is_over_spins || is_over_categories) {
+            is_over = true;
+        }
+
+        // indicate if the round is over
+        return is_over;
     }
 
     /**

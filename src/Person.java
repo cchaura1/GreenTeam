@@ -82,24 +82,6 @@ public class Person {
     }
 
     /**
-     * Gets the first round score of the player
-     *
-     * @return the first round score
-     */
-    public int getRound1_score() {
-        return this.round1_score;
-    }
-
-    /**
-     * Gets the second round score of the player
-     *
-     * @return the second round score
-     */
-    public int getRound2_score() {
-        return this.round2_score;
-    }
-
-    /**
      * Check how many free turns the player has
      *
      * @return the number of free turns

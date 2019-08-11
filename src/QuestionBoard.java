@@ -9,6 +9,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONPointerException;
+import org.json.JSONTokener;
 import java.util.*;
 
 
@@ -17,7 +21,7 @@ public class QuestionBoard {
     private HashMap currentQuestionDict;
 
     // Initialize the board
-    QuestionBoard() {
+    QuestionBoard(String board_location, Integer round) {
 
         /**
          * The board is represented as a dictionary
@@ -36,7 +40,7 @@ public class QuestionBoard {
         this.currentQuestionDict = new HashMap<String, Integer>();
 
         // set up the board
-        load_board();
+        load_board(board_location, round);
 
         // the initializer can be updated to read from a file instead of empty initializer
     }
@@ -132,103 +136,50 @@ public class QuestionBoard {
      * Feel very free to update the questions...
      * 
      */
-    public void load_board() {
+    public void load_board(String fname, Integer roundNum) {
 
-        // working code (not reading from a file though)
+        try {
+            JSONTokener tokener = new JSONTokener(new FileReader(fname));
+            JSONObject result = new JSONObject(tokener);
 
-        // first create 5 board tiles (to make up a single category)
-        BoardTile tile1 = new BoardTile(200,
-                "What is the seventh planet in the solar system?",
-                "Saturn");
-        BoardTile tile2 = new BoardTile(400,
-                "When will Halleys Comet return to Earth?",
-                "2016");
-        BoardTile tile3 = new BoardTile(600,
-                "How much does a full NASA spacesuit cost (approximately)?",
-                "$12,000,000");
-        BoardTile tile4 = new BoardTile(800,
-                "What was the number of the last Apollo mission?",
-                "17");
-        BoardTile tile5 = new BoardTile(1000,
-                "How many known moons orbit Neptune?",
-                "14");
+            JSONObject round;
+            if (roundNum == 1) {
+                round = (JSONObject) result.get("round1");
+            }
+            else {
+                round = (JSONObject) result.get("round2");
+            }
 
-        // next put all the tiles into a list
-        ArrayList<BoardTile> board_column1 = new ArrayList<BoardTile>();
-        board_column1.add(tile1);
-        board_column1.add(tile2);
-        board_column1.add(tile3);
-        board_column1.add(tile4);
-        board_column1.add(tile5);
+            JSONArray categories = (JSONArray) round.get("categories");
 
-        // then put the list in the dictionary
-        this.board.put("Space", board_column1);
+            for (Object c : categories) {
+                ArrayList<BoardTile> board_column = new ArrayList<BoardTile>();
 
-        // and initialize the currentQuestionDict for this category to 0
-        this.currentQuestionDict.put("Space", 0);
+                JSONObject category = (JSONObject) c;
+                String categoryName = (String) category.get("name");
 
-        // and do everything again: (probably best to loop)
-        BoardTile tile6 = new BoardTile(200,
-                "Which NHL player has the most career points?",
-                "Wayne Gretzky");
-        BoardTile tile7 = new BoardTile(400,
-                "Who is the winningest NHL goalie of all time",
-                "Martain Brodeur");
-        BoardTile tile8 = new BoardTile(600,
-                "What is the term for a goal, an assist, and a fight in one game?",
-                "Gordie Howe Hat Trick");
-        BoardTile tile9 = new BoardTile(800,
-                "Who shot the fastest puck in recorded history?",
-                "Bobby Hull (rec. 118.3 mph)");
-        BoardTile tile10 = new BoardTile(1000,
-                "Which NHL player holds the record for the most points in a single game?",
-                "Darryl Sittler");
+                JSONArray questions = (JSONArray) category.get("questions");
 
-        ArrayList<BoardTile> board_column2 = new ArrayList<BoardTile>();
-        board_column2.add(tile6);
-        board_column2.add(tile7);
-        board_column2.add(tile8);
-        board_column2.add(tile9);
-        board_column2.add(tile10);
+                for (Object q: questions){
+                    JSONObject questionObj = (JSONObject) q;
 
-        this.board.put("Hockey", board_column2);
+                    BoardTile tile = new BoardTile((Integer) questionObj.get("value"),
+                            (String) questionObj.get("question"),
+                            (String) questionObj.get("answer"));
+                    board_column.add(tile);
+                }
 
-        this.currentQuestionDict.put("Hockey", 0);
+                this.board.put(categoryName, board_column);
+                this.currentQuestionDict.put(categoryName, 0);
+            }
 
-        // do a few more times (6) to make a full board
-        // can wrap into a loop if you have a properly formatted file
-
-
-
-        // Below is Chetan's code
-
-//        ArrayList<BoardTile> board_column1 = new ArrayList<BoardTile>();
-//        int categoryIndex = 0;
-//    	String line1;
-//
-//        	try {
-//                BufferedReader reader1 = new BufferedReader(new FileReader(
-//                        "src/board.txt"));
-//				while ((line1 = reader1.readLine()) != null ) {
-//					  if(line1 == null || line1.isEmpty()) {
-//						  	line1 = reader1.readLine();
-//							String title = line1;
-//							line1 = reader1.readLine();
-//							this.currentQuestionDict.put(title, categoryIndex);
-//							// then put the list in the dictionary
-//					        this.board.put(title, board_column1);
-//					        categoryIndex ++;
-//					  }
-//
-//					  String [] d = line1.split(":");
-//					  board_column1.add(new BoardTile(Integer.parseInt(d[0]),d[1],d[2]));
-//				}
-//
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONPointerException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
