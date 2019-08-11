@@ -29,22 +29,45 @@
          this.sectors.add("Double your Score");
 
          // initialize the spins to 50
-         this.spinsRemaining = 10;
+         this.spinsRemaining = 50;
      }
 
      /**
       * Spin the wheel
       *
+      * @param board the board for the game
+      *
       * @return the sector that the wheel landed on
       */
-     public String spinWheel() {
+     public String spinWheel(QuestionBoard board) {
 
-         // get a random number between 0 and the number of sectors-1
-         Random random = new Random();
-         int index = random.nextInt(this.sectors.size());
+         // track if the sector is valid
+         boolean sector_closed = true;
 
-         // map the index to a sector
-         String sector = sectors.get(index);
+         String sector = "";
+
+         while (sector_closed) {
+             // get a random number between 0 and the number of sectors-1
+             Random random = new Random();
+             int index = random.nextInt(this.sectors.size());
+
+             // map the index to a sector
+             sector = sectors.get(index);
+
+             // if the category is closed, try another category
+             if (board.getAllCategories().contains(sector)) {
+                 if (board.getCurrentQuestionDict().get(sector) <= 4) {
+                     sector_closed = false;
+                 }
+                 else {
+                     System.out.println("SECTOR " + sector + " IS CLOSED");
+                 }
+             }
+             // if the category is not on the board, it is valid
+             else {
+                 sector_closed = false;
+             }
+         }
 
          // manage the number of spins remaining
          this.spinsRemaining -= 1;

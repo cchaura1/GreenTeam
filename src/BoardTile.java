@@ -26,15 +26,6 @@ public class BoardTile {
     }
 
     /**
-     * sets the value of a board tile
-     *
-     * @param value the monetary value of the tile
-     */
-    public void setValue(int value) {
-        this.value = value;
-    }
-
-    /**
      * gets the value of a board tile
      *
      * @return the monetary value of the tile
@@ -44,30 +35,12 @@ public class BoardTile {
     }
 
     /**
-     * sets the question of the board tile
-     *
-     * @param question the question you want to include in the game
-     */
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
-    /**
      * gets the question of the board tile
      *
      * @return the question you would like to ask
      */
     public String getQuestion() {
         return this.question;
-    }
-
-    /**
-     * sets the answer of the board tile
-     *
-     * @param answer the answer to the corresponding BoardTile question
-     */
-    public void setAnswer(String answer) {
-        this.answer = answer;
     }
 
     /**
