@@ -45,9 +45,12 @@ public class gui extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		int pos = 0;
-		final Pane mainPane = new Pane();		
+		final Pane mainPane = new Pane();	
+		//getAllCategories 
+		
 		// Load all name from the file
 		WOJCategories.addAll(loadWOJCategories(new File("names.txt")));	
+	//	WOJCategories.addAll()
 		for (Text name : WOJCategories) {
 			name.setUserData(new Integer(pos++));
 		}
