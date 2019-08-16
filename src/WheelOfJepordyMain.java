@@ -4,9 +4,11 @@
 
 
 import javafx.application.Application;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class WheelOfJepordyMain extends Application {
@@ -18,11 +20,10 @@ public class WheelOfJepordyMain extends Application {
 
     // create the people that are playing
     static List<Person> people = view.createPeople();
-
+    static List<Text> mycategories = new ArrayList<Text>();
     public static void main(String args[]) {
 
-    	gui ob = new gui();
-    	ob.launch(args);
+
     	
         // initialize the game
         view.initialize();
@@ -36,7 +37,18 @@ public class WheelOfJepordyMain extends Application {
         // create the board and wheel for round 1
         QuestionBoard board = new QuestionBoard("../src/board1.json", round);
         Wheel wheel = new Wheel(board);
-
+        
+        //***********Initiating GUI**********************
+        for(String key: board.getAllCategories()) {
+        	Text t = new Text();
+        	t.setText(key);
+            mycategories.add(t);
+        }
+    	gui ob = new gui(mycategories);
+    	ob.launch(args);
+    	//***********************************************
+    	
+    	
         // debug to make sure the board looks good
         //System.out.println("Board: \n" + board.toString());
 
@@ -383,7 +395,7 @@ public class WheelOfJepordyMain extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
-		gui obj = new gui();
+		gui obj = new gui(mycategories);
 		obj.start(primaryStage);
 	}
 }
