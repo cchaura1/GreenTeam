@@ -35,7 +35,7 @@ public class WheelOfJepordyMain extends Application {
         boolean use_free_turn = false;
 
         // create the board and wheel for round 1
-        QuestionBoard board = new QuestionBoard("../src/board1.json", round);
+        QuestionBoard board = new QuestionBoard("board1.json", round);
         Wheel wheel = new Wheel(board);
         
         //***********Initiating GUI**********************
