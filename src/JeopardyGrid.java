@@ -21,7 +21,9 @@ import javafx.util.Duration;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Label;
 import javafx.geometry.HPos;
-import javafx.geometry.Pos; 
+import javafx.geometry.Pos;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 
 public class JeopardyGrid
 {
@@ -54,6 +56,7 @@ public class JeopardyGrid
 		Label cat5 = new Label(All_Categories.get(4).getText());
 		Label cat6 = new Label(All_Categories.get(5).getText());
 		
+		
 		game_grid.add(cat1, 0, 0, 1, 1);
 		game_grid.add(cat2, 1, 0, 1, 1);
 		game_grid.add(cat3, 2, 0, 1, 1);
@@ -73,5 +76,28 @@ public class JeopardyGrid
 		
 		return game_grid;
 	}
+	
+	private Button getButton(GridPane game_grid, Integer row, Integer col)
+	{
+		ObservableList<Node> children = game_grid.getChildren();
+		Node result = null;
+	    for (Node node : children) 
+	    {
+	        if(game_grid.getRowIndex(node) == row && game_grid.getColumnIndex(node) == col) 
+	        {
+	            result = node;
+	            break;
+	        }
+	    }
+		
+		return (Button) result;
+	}
+	
+	public void disableButton(GridPane game_grid, Integer row, Integer col)
+	{
+		Button button = getButton(game_grid, row, col);
+		button.setDisable(true);
+	}
+	
 	
 }
