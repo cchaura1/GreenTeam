@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.layout.GridPane;
 
-public class gui extends Application {
+public class WheelGui extends Application {
 
 	private static final int Screen_Height = 800;
 	private static final int Screen_WIDHT = 1200;
@@ -33,7 +33,7 @@ public class gui extends Application {
 	private List<Text> All_Categories;
 	private List<Point> pointList = new ArrayList<>();
 	
-	gui(List<Text> allCategories){
+	WheelGui(List<Text> allCategories){
 		this.All_Categories = allCategories;
 	}
 	

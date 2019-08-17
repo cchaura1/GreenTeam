@@ -44,7 +44,7 @@ public class WheelOfJepordyMain extends Application {
         	t.setText(key);
             mycategories.add(t);
         }
-    	gui ob = new gui(mycategories);
+        WheelGui ob = new WheelGui(mycategories);
     	ob.launch(args);
     	//***********************************************
     	
@@ -395,7 +395,7 @@ public class WheelOfJepordyMain extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
-		gui obj = new gui(mycategories);
+		WheelGui obj = new WheelGui(mycategories);
 		obj.start(primaryStage);
 	}
 }
