@@ -18,6 +18,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.scene.layout.GridPane;
 
 public class gui extends Application {
 
@@ -71,6 +72,11 @@ public class gui extends Application {
 		primaryStage.setScene(scene);	
 		primaryStage.show();
 		nextTimeline.play();
+		
+    	JeopardyGrid gridController = new JeopardyGrid(All_Categories);
+    	GridPane gameGrid = gridController.makeGrid();
+    	mainPane.getChildren().add(gameGrid);
+    	
 	}
 	
 	private Timeline createTimeline(final Pane root, final KeyFrame duration, final Timeline nextTimeline) {
