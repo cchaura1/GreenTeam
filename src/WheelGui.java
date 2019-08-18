@@ -11,15 +11,22 @@ import javafx.animation.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 
 public class WheelGui extends Application {
@@ -31,7 +38,7 @@ public class WheelGui extends Application {
 	private static final int WOJ_CENTER_X = Screen_WIDHT / 2;
 	private static final int WOJ_CENTER_Y = Screen_Height - (Screen_WIDHT / 4);
 	private static final double ORBIT = 200;
-	private static final int FONT_SIZE = 6;
+	private static final int FONT_SIZE = 5;
 	private static final List<Text> WOJCategories = new ArrayList<>();
 	private List<Point> points;
 	private List<Text> All_Categories;
@@ -43,8 +50,12 @@ public class WheelGui extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) {
+		
+		//setPlayer(primaryStage);
+		
 		int pos = 0;
-		final Pane mainPane = new Pane();		
+		final Pane mainPane = new Pane();	
+		mainPane.setBackground(new Background(new BackgroundFill(Color.rgb(40, 40, 40), CornerRadii.EMPTY, Insets.EMPTY)));
 		WOJCategories.addAll(All_Categories);
 		for (Text key : WOJCategories) {
 			key.setUserData(new Integer(pos++));		
@@ -61,16 +72,21 @@ public class WheelGui extends Application {
 		}
 	
 		//initial label
+		selectedCategoryLabel.setTextFill(Color.ANTIQUEWHITE);
 		selectedCategoryLabel.setLayoutX(10);
 		selectedCategoryLabel.setLayoutY(300);
 	
 		mainPane.getChildren().add(selectedCategoryLabel);
 		
+		Circle circle = new Circle(WOJ_CENTER_X+60, WOJ_CENTER_Y+10, ORBIT+60);
+		circle.setFill(Color.DARKBLUE);
+		mainPane.getChildren().add(circle);
+		
 		Rectangle rectangle = new Rectangle();
-		rectangle.setFill(Color.GREENYELLOW);
+		rectangle.setFill(Color.BLACK);
 		rectangle.setX(380);
 		rectangle.setY((Screen_Height-Screen_WIDHT / 4 - 30));
-		rectangle.setWidth(ORBIT+50);
+		rectangle.setWidth(ORBIT+80);
 		rectangle.setHeight(50);
 		rectangle.setArcWidth(30.0); 
 	    rectangle.setArcHeight(20.0); 
@@ -86,6 +102,17 @@ public class WheelGui extends Application {
     	GridPane gameGrid = gridController.makeGrid();
     	mainPane.getChildren().add(gameGrid);
     	
+	}
+	
+	private void setPlayer(Stage primaryStage) {
+		final Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner(primaryStage);
+        VBox dialogVbox = new VBox(20);
+        dialogVbox.getChildren().add(new Text("This is a Dialog"));
+        Scene dialogScene = new Scene(dialogVbox, 300, 200);
+        dialog.setScene(dialogScene);
+        dialog.show();
 	}
 	
 	private Timeline createTimeline(final Pane root, final KeyFrame duration, final Timeline nextTimeline) {
@@ -155,8 +182,8 @@ public class WheelGui extends Application {
 	
 	private void formatText(Text name, Point point) {
 		Font font;
-		font = Font.font("Verdana", FontWeight.BOLD, FONT_SIZE * 1.8);
-		name.setFill(Color.BLUE);
+		font = Font.font("Verdana", FontWeight.MEDIUM, FONT_SIZE * 1.8);
+		name.setFill(Color.ANTIQUEWHITE);
 		name.setFont(font);
 		return;
 	}
