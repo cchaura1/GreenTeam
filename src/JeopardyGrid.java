@@ -18,7 +18,10 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Label;
 import javafx.geometry.HPos;
@@ -98,6 +101,8 @@ public class JeopardyGrid
 	public void disableButton(GridPane game_grid, Integer row, Integer col)
 	{
 		Button button = getButton(game_grid, row, col);
+		button.setBackground(new Background(new BackgroundFill(Color.rgb(0, 153, 0), CornerRadii.EMPTY, Insets.EMPTY)));
+		button.setTextFill(Color.WHITE);
 		button.setDisable(true);
 	}
 	

@@ -35,12 +35,10 @@ public class WheelGui extends Application {
 
 	private static final int Screen_Height = 800;
 	private static final int Screen_WIDHT = 1200;
-//	private static final int WOJ_CENTER_X = Screen_WIDHT / 2;
-//	private static final int WOJ_CENTER_Y = Screen_Height / 2;
 	private static final int WOJ_CENTER_X = Screen_WIDHT / 2;
 	private static final int WOJ_CENTER_Y = Screen_Height - (Screen_WIDHT / 4);
 	private static final double ORBIT = 200;
-	private static final int FONT_SIZE = 5;
+	private static final int FONT_SIZE = 4;
 	private static final List<Text> WOJCategories = new ArrayList<>();
 	private List<Point> points;
 	private List<Text> All_Categories;
@@ -56,15 +54,16 @@ public class WheelGui extends Application {
 		
 		//setPlayer(primaryStage);
 		Random r = new Random();
-		int lowCycle = 5;
-		int highCycle = 15;
-		int lowTimeline = 2;
-		int highTimeline = 7;
+		int lowCycle = 7;
+		int highCycle = 16;
+		int lowTimeline = 3;
+		int highTimeline = 8;
 		int pos = 0;
 		
 		int randomCycle = (int) (Math.random() * (highCycle - lowCycle)) + lowCycle;
 		int randomTimeline = (int) (Math.random() * (highTimeline - lowTimeline)) + lowTimeline;
-		
+		System.out.println("randomCycle |" + randomCycle);
+		System.out.println("randomTimeline |" + randomTimeline);
 		final Pane mainPane = new Pane();	
 		mainPane.setBackground(new Background(new BackgroundFill(Color.rgb(40, 40, 40), CornerRadii.EMPTY, Insets.EMPTY)));
 		WOJCategories.addAll(All_Categories);
@@ -89,7 +88,7 @@ public class WheelGui extends Application {
 	
 		mainPane.getChildren().add(selectedCategoryLabel);
 		
-		Circle circle = new Circle(WOJ_CENTER_X+60, WOJ_CENTER_Y+10, ORBIT+60);
+		Circle circle = new Circle(WOJ_CENTER_X+20, WOJ_CENTER_Y+10, ORBIT+20);
 		circle.setFill(Color.DARKBLUE);
 		mainPane.getChildren().add(circle);
 		
