@@ -37,6 +37,7 @@ public class WheelGui extends Application {
 	private List<Text> All_Categories;
 	private List<Point> pointList = new ArrayList<>();
 	private Label selectedCategoryLabel = new Label();
+	private GridPane gameGrid = new GridPane();
 	WheelGui(List<Text> allCategories){
 		this.All_Categories = allCategories;
 	}
@@ -83,7 +84,7 @@ public class WheelGui extends Application {
 		nextTimeline.play();
 		
     	JeopardyGrid gridController = new JeopardyGrid(All_Categories);
-    	GridPane gameGrid = gridController.makeGrid();
+    	gameGrid = gridController.makeGrid();
     	mainPane.getChildren().add(gameGrid);
     	
 	}
@@ -96,7 +97,9 @@ public class WheelGui extends Application {
 				moveCategory(duration);
 			}
 		}), duration);
-	
+		
+    	JeopardyGrid gridController = new JeopardyGrid(All_Categories);
+		
 		timeline.setOnFinished(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				if (nextTimeline != null) {
@@ -107,8 +110,11 @@ public class WheelGui extends Application {
 					for (Point key : pointList) {
 						if((int)key.x == 400 && (int)key.y == 500) {
 							selectedCategoryLabel.setText("Selected Category: "+key.name);
+													
+							gridController.processCategory(key.name, gameGrid);
 						}
-					}					
+	
+					}
 				}
 			};
 		});
@@ -191,5 +197,7 @@ public class WheelGui extends Application {
 			pointList.add(p);
 		}
 		return pointList;
-	}	
+	}
+	
+
 }
