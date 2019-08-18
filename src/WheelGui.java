@@ -3,6 +3,8 @@ import javafx.scene.control.Label;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.ParallelTransition;
 import javafx.animation.Timeline;
@@ -52,8 +54,16 @@ public class WheelGui extends Application {
 	public void start(Stage primaryStage) {
 		
 		//setPlayer(primaryStage);
-		
+		Random r = new Random();
+		int lowCycle = 5;
+		int highCycle = 15;
+		int lowTimeline = 2;
+		int highTimeline = 7;
 		int pos = 0;
+		
+		int randomCycle = (int) (Math.random() * (highCycle - lowCycle)) + lowCycle;
+		int randomTimeline = (int) (Math.random() * (highTimeline - lowTimeline)) + lowTimeline;
+		
 		final Pane mainPane = new Pane();	
 		mainPane.setBackground(new Background(new BackgroundFill(Color.rgb(40, 40, 40), CornerRadii.EMPTY, Insets.EMPTY)));
 		WOJCategories.addAll(All_Categories);
@@ -62,10 +72,10 @@ public class WheelGui extends Application {
 		}
 	
 		points = calculatePoints(WOJCategories.size(), WOJ_CENTER_X, WOJ_CENTER_Y, ORBIT);
-		int cyclesPerTimeline = 10;
+		int cyclesPerTimeline = randomCycle;
 		Timeline nextTimeline = null;
 		
-		for (int numberOfTimelines = 5; numberOfTimelines > 0; numberOfTimelines--) {
+		for (int numberOfTimelines = randomTimeline; numberOfTimelines > 0; numberOfTimelines--) {
 			final KeyFrame duration = new KeyFrame(Duration.millis(60 * numberOfTimelines));
 			nextTimeline = createTimeline(mainPane, duration, nextTimeline);
 			nextTimeline.setCycleCount(cyclesPerTimeline);
