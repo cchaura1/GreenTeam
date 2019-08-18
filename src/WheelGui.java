@@ -24,10 +24,12 @@ public class WheelGui extends Application {
 
 	private static final int Screen_Height = 800;
 	private static final int Screen_WIDHT = 1200;
+//	private static final int WOJ_CENTER_X = Screen_WIDHT / 2;
+//	private static final int WOJ_CENTER_Y = Screen_Height / 2;
 	private static final int WOJ_CENTER_X = Screen_WIDHT / 2;
-	private static final int WOJ_CENTER_Y = Screen_Height / 2;
-	private static final double ORBIT = 250;
-	private static final int FONT_SIZE = 8;
+	private static final int WOJ_CENTER_Y = Screen_Height - (Screen_WIDHT / 4);
+	private static final double ORBIT = 200;
+	private static final int FONT_SIZE = 6;
 	private static final List<Text> WOJCategories = new ArrayList<>();
 	private List<Point> points;
 	private List<Text> All_Categories;
@@ -59,16 +61,16 @@ public class WheelGui extends Application {
 	
 		Rectangle rectangle = new Rectangle();
 		rectangle.setFill(Color.GREENYELLOW);
-		rectangle.setX(340);
-		rectangle.setY((Screen_Height-75)/2);
-		rectangle.setWidth(ORBIT);
-		rectangle.setHeight(60);
+		rectangle.setX(380);
+		rectangle.setY((Screen_Height-Screen_WIDHT / 4 - 30));
+		rectangle.setWidth(ORBIT+50);
+		rectangle.setHeight(50);
 		rectangle.setArcWidth(30.0); 
 	    rectangle.setArcHeight(20.0); 
 		mainPane.getChildren().add(rectangle);		
 		mainPane.getChildren().addAll(WOJCategories);
 		Scene scene = new Scene(mainPane, Screen_WIDHT, Screen_Height);	
-		primaryStage.setTitle("Wheel Of Jeopardy");
+		primaryStage.setTitle("Green Team Wheel Of Jeopardy");
 		primaryStage.setScene(scene);	
 		primaryStage.show();
 		nextTimeline.play();
@@ -104,8 +106,8 @@ public class WheelGui extends Application {
 		root.getChildren().add(btn);
 		btn.setPrefWidth(120);
 		btn.setPrefHeight(50);
-		btn.setLayoutX(50);
-		btn.setLayoutY((Screen_Height-75)/2);
+		btn.setLayoutX(220);
+		btn.setLayoutY((Screen_Height-Screen_WIDHT / 4 - 30));
 		btn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {

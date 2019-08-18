@@ -18,6 +18,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Label;
 import javafx.geometry.HPos;
@@ -37,9 +38,8 @@ public class JeopardyGrid
 	public GridPane makeGrid()
 	{
 		GridPane game_grid = new GridPane();
-		
-		game_grid.setHgap(50);
-		game_grid.setVgap(50);
+		game_grid.setHgap(80);
+		game_grid.setVgap(20);
 		game_grid.setGridLinesVisible(true);
 		game_grid.setAlignment(Pos.CENTER); 
 		
