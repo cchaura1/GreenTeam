@@ -42,11 +42,14 @@ public class WheelGui extends Application {
 	private static final List<Text> WOJCategories = new ArrayList<>();
 	private List<Point> points;
 	private List<Text> All_Categories;
+	private List<Person> All_Players;
 	private List<Point> pointList = new ArrayList<>();
 	private Label selectedCategoryLabel = new Label();
 	private GridPane gameGrid = new GridPane();
-	WheelGui(List<Text> allCategories){
+	private GridPane playerGrid = new GridPane();
+	WheelGui(List<Text> allCategories, List<Person> people){
 		this.All_Categories = allCategories;
+		this.All_Players = people;
 	}
 	
 	@Override
@@ -102,6 +105,10 @@ public class WheelGui extends Application {
     	JeopardyGrid gridController = new JeopardyGrid(All_Categories);
     	gameGrid = gridController.makeGrid();
     	mainPane.getChildren().add(gameGrid);
+    	
+    	PlayerManager playerManager = new PlayerManager(All_Players);
+    	playerGrid = playerManager.makePlayerGUI();
+    	mainPane.getChildren().add(playerGrid);
     	
 	}
 	
