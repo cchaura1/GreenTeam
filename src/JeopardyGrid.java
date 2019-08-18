@@ -25,6 +25,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.geometry.Insets;
 
 public class JeopardyGrid
 {
@@ -38,6 +39,7 @@ public class JeopardyGrid
 	public GridPane makeGrid()
 	{
 		GridPane game_grid = new GridPane();
+		game_grid.setPadding(new Insets(25, 25, 25, 25));
 		game_grid.setHgap(80);
 		game_grid.setVgap(20);
 		game_grid.setGridLinesVisible(true);
@@ -49,12 +51,12 @@ public class JeopardyGrid
 		String value4 = "800";
 		String value5 = "1000";
 		
-		Label cat1 = new Label(All_Categories.get(0).getText());
-		Label cat2 = new Label(All_Categories.get(1).getText());
-		Label cat3 = new Label(All_Categories.get(2).getText());
-		Label cat4 = new Label(All_Categories.get(3).getText());
-		Label cat5 = new Label(All_Categories.get(4).getText());
-		Label cat6 = new Label(All_Categories.get(5).getText());
+		Button cat1 = new Button(All_Categories.get(0).getText());
+		Button cat2 = new Button(All_Categories.get(1).getText());
+		Button cat3 = new Button(All_Categories.get(2).getText());
+		Button cat4 = new Button(All_Categories.get(3).getText());
+		Button cat5 = new Button(All_Categories.get(4).getText());
+		Button cat6 = new Button(All_Categories.get(5).getText());
 		
 		
 		game_grid.add(cat1, 0, 0, 1, 1);
@@ -64,7 +66,7 @@ public class JeopardyGrid
 		game_grid.add(cat5, 4, 0, 1, 1);
 		game_grid.add(cat6, 5, 0, 1, 1);
 			
-		for (int i = 0; i < All_Categories.size(); i++)
+		for (int i = 0; i < 6; i++)
 		{
 			game_grid.add(new Button(value1), i, 1, 1, 1);
 			game_grid.add(new Button(value2), i, 2, 1, 1);
@@ -99,5 +101,178 @@ public class JeopardyGrid
 		button.setDisable(true);
 	}
 	
+	public Integer findNextButton(GridPane gameGrid, Integer col)
+	{
+		ObservableList<Node> children = gameGrid.getChildren();
+		Node result = null;
+		Integer row = 0;
+	    for (Node node : children) 
+	    {
+	        if(gameGrid.getColumnIndex(node) == col) 
+	        {
+	            if(node.isDisabled() || gameGrid.getRowIndex(node) == 0)
+	            {
+	            	continue;
+	            }
+	            else
+	            {
+	            	row = gameGrid.getRowIndex(node);
+	            	break;
+	            }
+	        }
+	    }
+	    
+	    return row;
+		
+	}
 	
+	public void processCategory(String category, GridPane gameGrid) 
+	{
+		Integer gridRow = 0;
+		
+		if(category.equals(All_Categories.get(0).getText()))
+		{			
+			gridRow = findNextButton(gameGrid, 0);
+			if(gridRow == 5)
+			{
+				disableButton(gameGrid, 0, 0);
+			}
+			disableButton(gameGrid, gridRow, 0);
+		}
+		else if(category.equals(All_Categories.get(1).getText()))
+		{			
+			gridRow = findNextButton(gameGrid, 1);
+			if(gridRow == 5)
+			{
+				disableButton(gameGrid, 0, 1);
+			}
+			disableButton(gameGrid, gridRow, 1);
+		}
+		else if(category.equals(All_Categories.get(2).getText()))
+		{			
+			gridRow = findNextButton(gameGrid, 2);
+			if(gridRow == 5)
+			{
+				disableButton(gameGrid, 0, 2);
+			}
+			disableButton(gameGrid, gridRow, 2);
+		}
+		else if(category.equals(All_Categories.get(3).getText()))
+		{			
+			gridRow = findNextButton(gameGrid, 3);
+			if(gridRow == 5)
+			{
+				disableButton(gameGrid, 0, 3);
+			}
+			disableButton(gameGrid, gridRow, 3);
+		}
+		else if(category.equals(All_Categories.get(4).getText()))
+		{			
+			gridRow = findNextButton(gameGrid, 4);
+			if(gridRow == 5)
+			{
+				disableButton(gameGrid, 0, 4);
+			}
+			disableButton(gameGrid, gridRow, 4);
+		}
+		else if(category.equals(All_Categories.get(5).getText()))
+		{			
+			gridRow = findNextButton(gameGrid, 5);
+			if(gridRow == 5)
+			{
+				disableButton(gameGrid, 0, 5);
+			}
+			disableButton(gameGrid, gridRow, 5);
+		}
+		else if(category.equals("Opponent's Choice") || category.equals("Player's Choice"))
+		{			
+			chooseCategory(gameGrid);
+		}	
+
+	}
+
+	public void chooseCategory(GridPane gameGrid) 
+	{
+		Button cat1 = getButton(gameGrid, 0, 0);
+		Button cat2 = getButton(gameGrid, 0, 1);
+		Button cat3 = getButton(gameGrid, 0, 2);
+		Button cat4 = getButton(gameGrid, 0, 3);
+		Button cat5 = getButton(gameGrid, 0, 4);
+		Button cat6 = getButton(gameGrid, 0, 5);
+		
+        cat1.setOnAction(new EventHandler<ActionEvent>() 
+        {
+            public void handle(ActionEvent event) 
+            {
+    			int gridRow = findNextButton(gameGrid, 0);
+    			if(gridRow == 5)
+    			{
+    				disableButton(gameGrid, 0, 0);
+    			}
+    			disableButton(gameGrid, gridRow, 0);
+            }
+        });
+        cat2.setOnAction(new EventHandler<ActionEvent>() 
+        {
+            public void handle(ActionEvent event) 
+            {
+    			int gridRow = findNextButton(gameGrid, 1);
+    			if(gridRow == 5)
+    			{
+    				disableButton(gameGrid, 0, 1);
+    			}
+    			disableButton(gameGrid, gridRow, 1);
+            }
+        });
+        cat3.setOnAction(new EventHandler<ActionEvent>() 
+        {
+            public void handle(ActionEvent event) 
+            {
+    			int gridRow = findNextButton(gameGrid, 2);
+    			if(gridRow == 5)
+    			{
+    				disableButton(gameGrid, 0, 2);
+    			}
+    			disableButton(gameGrid, gridRow, 2);
+            }
+        });
+        cat4.setOnAction(new EventHandler<ActionEvent>() 
+        {
+            public void handle(ActionEvent event) 
+            {
+    			int gridRow = findNextButton(gameGrid, 3);
+    			if(gridRow == 5)
+    			{
+    				disableButton(gameGrid, 0, 3);
+    			}
+    			disableButton(gameGrid, gridRow, 3);
+            }
+        });
+        cat5.setOnAction(new EventHandler<ActionEvent>() 
+        {
+            public void handle(ActionEvent event) 
+            {
+    			int gridRow = findNextButton(gameGrid, 4);
+    			if(gridRow == 5)
+    			{
+    				disableButton(gameGrid, 0, 4);
+    			}
+    			disableButton(gameGrid, gridRow, 4);
+            }
+        });
+        cat6.setOnAction(new EventHandler<ActionEvent>() 
+        {
+            public void handle(ActionEvent event) 
+            {
+    			int gridRow = findNextButton(gameGrid, 5);
+    			if(gridRow == 5)
+    			{
+    				disableButton(gameGrid, 0, 5);
+    			}
+    			disableButton(gameGrid, gridRow, 5);
+            }
+        });
+		
+	}
+    
 }
