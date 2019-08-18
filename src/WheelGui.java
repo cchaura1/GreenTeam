@@ -1,4 +1,6 @@
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+
 import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.KeyFrame;
@@ -34,7 +36,7 @@ public class WheelGui extends Application {
 	private List<Point> points;
 	private List<Text> All_Categories;
 	private List<Point> pointList = new ArrayList<>();
-	
+	private Label selectedCategoryLabel = new Label();
 	WheelGui(List<Text> allCategories){
 		this.All_Categories = allCategories;
 	}
@@ -44,12 +46,12 @@ public class WheelGui extends Application {
 		int pos = 0;
 		final Pane mainPane = new Pane();		
 		WOJCategories.addAll(All_Categories);
-		for (Text name : WOJCategories) {
-			name.setUserData(new Integer(pos++));
+		for (Text key : WOJCategories) {
+			key.setUserData(new Integer(pos++));		
 		}
 	
 		points = calculatePoints(WOJCategories.size(), WOJ_CENTER_X, WOJ_CENTER_Y, ORBIT);
-	
+	System.out.println(Screen_Height-Screen_WIDHT / 4 - 30);
 		int cyclesPerTimeline = 10;
 		Timeline nextTimeline = null;
 		
@@ -59,6 +61,12 @@ public class WheelGui extends Application {
 			nextTimeline.setCycleCount(cyclesPerTimeline);
 		}
 	
+		//initial label
+		selectedCategoryLabel.setLayoutX(10);
+		selectedCategoryLabel.setLayoutY(300);
+	
+		mainPane.getChildren().add(selectedCategoryLabel);
+		
 		Rectangle rectangle = new Rectangle();
 		rectangle.setFill(Color.GREENYELLOW);
 		rectangle.setX(380);
@@ -97,8 +105,11 @@ public class WheelGui extends Application {
 				} 
 				else {
 				//Display end result here..
-				
-					
+					for (Point key : pointList) {
+						if((int)key.x == 400 && (int)key.y == 500) {
+							selectedCategoryLabel.setText("Selected Category: "+key.name);
+						}
+					}					
 				}
 			};
 		});
@@ -138,6 +149,8 @@ public class WheelGui extends Application {
 			if (((Integer) name.getUserData()) > points.size() - 1) {
 				name.setUserData(0);
 			}
+			//nextPoint.name = name;
+			nextPoint.name = name.getText();
 		}
 	}
 	
@@ -158,6 +171,7 @@ public class WheelGui extends Application {
 		double y;
 		int position;
 		double angle;
+		String name;
 	}
 	
 	private List<Point> calculatePoints(int points, double centerX, double centerY, double radius) {
