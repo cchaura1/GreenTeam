@@ -51,7 +51,6 @@ public class WheelGui extends Application {
 		}
 	
 		points = calculatePoints(WOJCategories.size(), WOJ_CENTER_X, WOJ_CENTER_Y, ORBIT);
-	System.out.println(Screen_Height-Screen_WIDHT / 4 - 30);
 		int cyclesPerTimeline = 10;
 		Timeline nextTimeline = null;
 		

@@ -39,7 +39,7 @@ public class WheelOfJepordyMain extends Application {
         Wheel wheel = new Wheel(board);
         
         //***********Initiating GUI**********************
-        for(String key: board.getAllCategories()) {
+        for(String key: wheel.getSectors()) {
         	Text t = new Text();
         	t.setText(key);
             mycategories.add(t);
