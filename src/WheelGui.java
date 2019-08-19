@@ -64,8 +64,6 @@ public class WheelGui extends Application {
 		
 		int randomCycle = (int) (Math.random() * (highCycle - lowCycle)) + lowCycle;
 		int randomTimeline = (int) (Math.random() * (highTimeline - lowTimeline)) + lowTimeline;
-		System.out.println("randomCycle |" + randomCycle);
-		System.out.println("randomTimeline |" + randomTimeline);
 		final Pane mainPane = new Pane();	
 		mainPane.setBackground(new Background(new BackgroundFill(Color.rgb(40, 40, 40), CornerRadii.EMPTY, Insets.EMPTY)));
 		WOJCategories.addAll(All_Categories);
