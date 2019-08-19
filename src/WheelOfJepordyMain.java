@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,181 +18,179 @@ public class WheelOfJepordyMain extends Application {
     // when we want to switch to Chetan's GUI we can just hot swap the views
     // this will require Chetan to have all of the methods that my view has
     static TextView view = new TextView();
-
-    // create the people that are playing
-    static List<Person> people = view.createPeople();
     static List<Text> mycategories = new ArrayList<Text>();
     public static void main(String args[]) {
 
-
-    	
-        // initialize the game
-        view.initialize();
-
-        // initialize the game
-        boolean continue_game = true;
-        Person current_player = people.get(0);
+//        // initialize the game
+//        view.initialize();
+//
+//        // initialize the game
+//        boolean continue_game = true;
+//        Person current_player = people.get(0);
         int round = 1;
-        boolean use_free_turn = false;
+//        boolean use_free_turn = false;
 
         // create the board and wheel for round 1
         QuestionBoard board = new QuestionBoard("board1.json", round);
         Wheel wheel = new Wheel(board);
         
-        //***********Initiating GUI**********************
+//        //***********Initiating GUI**********************
         for(String key: wheel.getSectors()) {
         	Text t = new Text();
         	t.setText(key);
             mycategories.add(t);
         }
+     
         WheelGui ob = new WheelGui(mycategories);
+  
     	ob.launch(args);
+// 
     	//***********************************************
     	
     	
-        // debug to make sure the board looks good
-        //System.out.println("Board: \n" + board.toString());
-
-        // game loop
-        while (continue_game) {
-
-            // update the view
-            view.updatePeople(people);
-            view.indicateRound(round);
-            view.updateCurrentPlayer(current_player);
-            view.updateWheelCounter(wheel);
-
-            // the current player spins the wheel
-            String spun_category = wheel.spinWheel(board);
-
-            // the view shows the result of spinning the wheel
-            view.spinWheel(spun_category);
-
-            // take action based on the category you spin
-            if (spun_category.equals("Lose Turn")) {
-                use_free_turn = loseTurn(current_player);
-            }
-
-            else if (spun_category.equals("Free Turn")) {
-                giveFreeTurn(current_player);
-            }
-
-            else if (spun_category.equals("Bankrupt")) {
-                bankruptPlayer(current_player, round);
-            }
-
-            else if (spun_category.equals("Double your Score")) {
-                doubleScore(current_player, round);
-            }
-
-            else if (spun_category.equals("Player's Choice")) {
-                view.indicatePlayersChoice();
-
-//                System.out.println("1. " + board.toString());
-
-                String selected_category  = view.getSelectedCategory(board);
-                BoardTile tile = board.currentTile(selected_category);
-
-//                System.out.println("2. " + board.toString());
-
-                // ask the player hte question and track score
-                String was_correct = view.askQuestion(tile);
-
-                // if the answer was correct add the score to the player
-                if (was_correct.equals("y")) {
-                    addScoreToPlayer(tile.getValue(), current_player, round);
-                }
-                // if the answer was wrong subtract the score from the player
-                else if (was_correct.equals("n")) {
-                    addScoreToPlayer(-1 * tile.getValue(), current_player, round);
-                }
-                // if the answer was p do not add any score
-
-                // move to the next question in the category
-                board.incrementCategotry(selected_category);
-                view.updatePeople(people);
-                view.updateBoard(board);
-
-//                System.out.println("4. " + board.toString());
-            }
-
-            else if (spun_category.equals("Opponent's Choice")) {
-                view.indicateOpponentsChoice();
-
-                String selectedCategory  = view.getSelectedCategory(board);
-                BoardTile tile = board.currentTile(selectedCategory);
-
-                // ask the player hte question and track score
-                String was_correct = view.askQuestion(tile);
-                // if the answer was correct add the score to the player
-                if (was_correct.equals("y")) {
-                    addScoreToPlayer(tile.getValue(), current_player, round);
-                }
-                // if the answer was wrong subtract the score from the player
-                else if (was_correct.equals("n")) {
-                    addScoreToPlayer(-1 * tile.getValue(), current_player, round);
-                }
-                // if the answer was p do not add any score
-
-                // move to the next question in the category
-                board.incrementCategotry(selectedCategory);
-                view.updatePeople(people);
-                view.updateBoard(board);
-            }
-
-            // check if the spun category is a jeopardy question
-            else if (wheel.getSectors().contains(spun_category)) {
-                BoardTile tile = board.currentTile(spun_category);
-
-                // ask the player hte question and track score
-                String was_correct = view.askQuestion(tile);
-                // if the answer was correct add the score to the player
-                if (was_correct.equals("y")) {
-                    addScoreToPlayer(tile.getValue(), current_player, round);
-                }
-                // if the answer was wrong subtract the score from the player
-                else if (was_correct.equals("n")) {
-                    addScoreToPlayer(-1 * tile.getValue(), current_player, round);
-                }
-                // if the answer was p do not add any score
-
-                // move to the next question in the category
-                board.incrementCategotry(spun_category);
-                view.updatePeople(people);
-                view.updateBoard(board);
-
-            }
-
-            else {
-                System.out.println("ERROR: This is not a category");
-            }
-
-            // turn is over, move to next player if there is no token used
-            if (!use_free_turn) {
-                current_player = getNextPlayer(current_player);
-            }
-
-            // end of turn cleanup
-            use_free_turn = false;
-
-            // check if we should continue the round
-            if (isRoundOver(board, wheel)) {
-                round += 1;
-                board = new QuestionBoard("src/board1.json", round);
-                wheel = new Wheel(board);
-            }
-
-            // check if we should continue the game
-            if (round > 2) {
-                continue_game = false;
-            }
-
-            view.goToNextTurn();
-        }
-
-        // handle the end of the game
-        Person winner = getWinner();
-        view.endGame(winner);
+//        // debug to make sure the board looks good
+//        //System.out.println("Board: \n" + board.toString());
+//
+//        // game loop
+//        while (continue_game) {
+//
+//            // update the view
+//            view.updatePeople(people);
+//            view.indicateRound(round);
+//            view.updateCurrentPlayer(current_player);
+//            view.updateWheelCounter(wheel);
+//
+//            // the current player spins the wheel
+//            String spun_category = wheel.spinWheel(board);
+//
+//            // the view shows the result of spinning the wheel
+//            view.spinWheel(spun_category);
+//
+//            // take action based on the category you spin
+//            if (spun_category.equals("Lose Turn")) {
+//                use_free_turn = loseTurn(current_player);
+//            }
+//
+//            else if (spun_category.equals("Free Turn")) {
+//                giveFreeTurn(current_player);
+//            }
+//
+//            else if (spun_category.equals("Bankrupt")) {
+//                bankruptPlayer(current_player, round);
+//            }
+//
+//            else if (spun_category.equals("Double your Score")) {
+//                doubleScore(current_player, round);
+//            }
+//
+//            else if (spun_category.equals("Player's Choice")) {
+//                view.indicatePlayersChoice();
+//
+////                System.out.println("1. " + board.toString());
+//
+//                String selected_category  = view.getSelectedCategory(board);
+//                BoardTile tile = board.currentTile(selected_category);
+//
+////                System.out.println("2. " + board.toString());
+//
+//                // ask the player hte question and track score
+//                String was_correct = view.askQuestion(tile);
+//
+//                // if the answer was correct add the score to the player
+//                if (was_correct.equals("y")) {
+//                    addScoreToPlayer(tile.getValue(), current_player, round);
+//                }
+//                // if the answer was wrong subtract the score from the player
+//                else if (was_correct.equals("n")) {
+//                    addScoreToPlayer(-1 * tile.getValue(), current_player, round);
+//                }
+//                // if the answer was p do not add any score
+//
+//                // move to the next question in the category
+//                board.incrementCategotry(selected_category);
+//                view.updatePeople(people);
+//                view.updateBoard(board);
+//
+////                System.out.println("4. " + board.toString());
+//            }
+//
+//            else if (spun_category.equals("Opponent's Choice")) {
+//                view.indicateOpponentsChoice();
+//
+//                String selectedCategory  = view.getSelectedCategory(board);
+//                BoardTile tile = board.currentTile(selectedCategory);
+//
+//                // ask the player hte question and track score
+//                String was_correct = view.askQuestion(tile);
+//                // if the answer was correct add the score to the player
+//                if (was_correct.equals("y")) {
+//                    addScoreToPlayer(tile.getValue(), current_player, round);
+//                }
+//                // if the answer was wrong subtract the score from the player
+//                else if (was_correct.equals("n")) {
+//                    addScoreToPlayer(-1 * tile.getValue(), current_player, round);
+//                }
+//                // if the answer was p do not add any score
+//
+//                // move to the next question in the category
+//                board.incrementCategotry(selectedCategory);
+//                view.updatePeople(people);
+//                view.updateBoard(board);
+//            }
+//
+//            // check if the spun category is a jeopardy question
+//            else if (wheel.getSectors().contains(spun_category)) {
+//                BoardTile tile = board.currentTile(spun_category);
+//
+//                // ask the player hte question and track score
+//                String was_correct = view.askQuestion(tile);
+//                // if the answer was correct add the score to the player
+//                if (was_correct.equals("y")) {
+//                    addScoreToPlayer(tile.getValue(), current_player, round);
+//                }
+//                // if the answer was wrong subtract the score from the player
+//                else if (was_correct.equals("n")) {
+//                    addScoreToPlayer(-1 * tile.getValue(), current_player, round);
+//                }
+//                // if the answer was p do not add any score
+//
+//                // move to the next question in the category
+//                board.incrementCategotry(spun_category);
+//                view.updatePeople(people);
+//                view.updateBoard(board);
+//
+//            }
+//
+//            else {
+//                System.out.println("ERROR: This is not a category");
+//            }
+//
+//            // turn is over, move to next player if there is no token used
+//            if (!use_free_turn) {
+//                current_player = getNextPlayer(current_player);
+//            }
+//
+//            // end of turn cleanup
+//            use_free_turn = false;
+//
+//            // check if we should continue the round
+//            if (isRoundOver(board, wheel)) {
+//                round += 1;
+//                board = new QuestionBoard("src/board1.json", round);
+//                wheel = new Wheel(board);
+//            }
+//
+//            // check if we should continue the game
+//            if (round > 2) {
+//                continue_game = false;
+//            }
+//
+//            view.goToNextTurn();
+//        }
+//
+//        // handle the end of the game
+//        Person winner = getWinner();
+//        view.endGame(winner);
 
     }
 
@@ -241,7 +240,7 @@ public class WheelOfJepordyMain extends Application {
 
         // initialize the index for the next player
         int next_index = 0;
-
+        List<Person> people = TextView.people;
         // get index of current player. The index of the next player is this + 1
         for (int index = 0; index < people.size(); index++) {
             if (people.get(index) == current_player) {
@@ -290,7 +289,7 @@ public class WheelOfJepordyMain extends Application {
      * @return
      */
     public static void giveFreeTurn(Person current_player) {
-
+    	 List<Person> people = TextView.people;
         // iterate over the people in the game and give free turn to current player
         for (int index = 0; index < people.size(); index++) {
             if (people.get(index) == current_player) {
@@ -306,7 +305,7 @@ public class WheelOfJepordyMain extends Application {
      * @param round the current round
      */
     public static void bankruptPlayer(Person current_player, int round) {
-
+    	 List<Person> people = TextView.people;
         // iterate over the people in the game and bankrupt the player for this round
         for (int index = 0; index < people.size(); index++) {
             if (people.get(index) == current_player) {
@@ -328,7 +327,7 @@ public class WheelOfJepordyMain extends Application {
      * @param round the round for which score to double
      */
     public static void doubleScore(Person current_player, int round) {
-
+    	 List<Person> people = TextView.people;
         // iterate over the people in the game and double the score for the player for this round
         for (int index = 0; index < people.size(); index++) {
             if (people.get(index) == current_player) {
@@ -350,7 +349,7 @@ public class WheelOfJepordyMain extends Application {
      * @param round the round for which to add the score
      */
     public static void addScoreToPlayer(int score, Person player, int round) {
-
+    	 List<Person> people = TextView.people;
         // iterate over the people in the game and add the score to the round
         for (int index = 0; index < people.size(); index++) {
             if (people.get(index) == player) {
@@ -370,6 +369,7 @@ public class WheelOfJepordyMain extends Application {
      * @return the winner
      */
     public static Person getWinner() {
+    	 List<Person> people = TextView.people;
         // some variables to help track who is the winner
         int highest = 0;
         int highest_index = 0;
