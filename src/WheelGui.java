@@ -30,6 +30,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
+import javafx.scene.control.TextInputDialog;
 
 public class WheelGui extends Application {
 
@@ -42,14 +43,12 @@ public class WheelGui extends Application {
 	private static final List<Text> WOJCategories = new ArrayList<>();
 	private List<Point> points;
 	private List<Text> All_Categories;
-	private List<Person> All_Players;
 	private List<Point> pointList = new ArrayList<>();
 	private Label selectedCategoryLabel = new Label();
 	private GridPane gameGrid = new GridPane();
 	private GridPane playerGrid = new GridPane();
-	WheelGui(List<Text> allCategories, List<Person> people){
+	WheelGui(List<Text> allCategories){
 		this.All_Categories = allCategories;
-		this.All_Players = people;
 	}
 	
 	@Override
@@ -115,10 +114,53 @@ public class WheelGui extends Application {
     	gameGrid = gridController.makeGrid();
     	mainPane.getChildren().add(gameGrid);
     	
-    	PlayerManager playerManager = new PlayerManager(All_Players);
-    	playerGrid = playerManager.makePlayerGUI();
-    	mainPane.getChildren().add(playerGrid);
+    	PlayerManager playerManager = new PlayerManager();
     	
+    	Button addPlayerButton = new Button("Add Player");
+		addPlayerButton.setPrefHeight(40);
+    	addPlayerButton.setLayoutX(950);
+    	addPlayerButton.setLayoutY(300); 	
+    	
+    	Button doneAddingPlayers = new Button("Done Adding Players");
+		doneAddingPlayers.setPrefHeight(40);
+    	doneAddingPlayers.setLayoutX(950);
+    	doneAddingPlayers.setLayoutY(350); 
+    	
+    	TextInputDialog td = new TextInputDialog();
+    	td.setHeaderText("Enter Player Name");
+    	Label playerName = new Label();
+        EventHandler<ActionEvent> addPlayerEvent = new EventHandler<ActionEvent>() 
+        { 
+            public void handle(ActionEvent e) 
+            { 
+                td.showAndWait();
+                playerName.setText(td.getEditor().getText());
+                Person currentPlayer = new Person(playerName.getText());
+                playerManager.addNewPlayer(currentPlayer);
+                TextView.people.add(currentPlayer);
+                td.getEditor().clear();
+            } 
+        };
+        addPlayerButton.setOnAction(addPlayerEvent);
+        GridPane playerGrid = playerManager.makePlayerGUI();
+        playerGrid.setLayoutX(950);
+        playerGrid.setLayoutY(400);
+        mainPane.getChildren().add(playerGrid);
+        
+        EventHandler<ActionEvent> doneAddingEvent = new EventHandler<ActionEvent>() 
+        { 
+            public void handle(ActionEvent e) 
+            { 
+            	addPlayerButton.setDisable(true);
+            } 
+        };
+        
+        doneAddingPlayers.setOnAction(doneAddingEvent);
+        
+        
+    	mainPane.getChildren().add(addPlayerButton);
+    	mainPane.getChildren().add(doneAddingPlayers);
+        
 	}
 	
 	private void setPlayer(Stage primaryStage) {

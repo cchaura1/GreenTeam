@@ -29,30 +29,76 @@ import javafx.geometry.Insets;
 
 public class PlayerManager
 {
-	private List<Person> Players;
+	private GridPane playersGrid = new GridPane();
 	
-	PlayerManager(List<Person> people)
+	PlayerManager()
 	{
-		this.Players = people;
+		playersGrid.add(new Label("Player Name"), 0, 0);
+		playersGrid.add(new Label("Player Score"), 1, 0);
 	}
+	
+	public void addNewPlayer(Person player)
+	{
+		String name = player.getName();
+		int rows = getRowCount(playersGrid);
+		playersGrid.add(new Label(name), 0, rows);
+		playersGrid.add(new Label("0"), 1, rows);	
+	}
+	
+	public void updatePlayerScore(Person player, int newScore)
+	{
+		ObservableList<Node> children = playersGrid.getChildren();
+		int row = 0;
+		Label thisPerson = new Label();
+	    for (Node node : children) 
+	    {
+	    	thisPerson = (Label) node;
+	    	String thisName = thisPerson.getText();
+	    	if(player.getName().equals(thisName))
+	    	{
+	    		row = playersGrid.getRowIndex(node);
+	    		break;
+	    	}
+	    }
+	    String scoreString = Integer.toString(newScore);
+	    playersGrid.getChildren().remove(thisPerson);
+	    playersGrid.add(new Label(scoreString), 1, row);
+	}
+	
+	private int getRowCount(GridPane pane) 
+	{
+        int numRows = pane.getRowConstraints().size();
+        for (int i = 0; i < pane.getChildren().size(); i++) 
+        {
+            Node child = pane.getChildren().get(i);
+            if (child.isManaged()) 
+            {
+                Integer rowIndex = GridPane.getRowIndex(child);
+                if(rowIndex != null)
+                {
+                    numRows = Math.max(numRows,rowIndex+1);
+                }
+            }
+        }
+        return numRows;
+    }
 	
 	public GridPane makePlayerGUI()
 	{
-		GridPane playerGrid = new GridPane();
-		playerGrid.setPadding(new Insets(25, 25, 25, 25));
-		playerGrid.setHgap(80);
-		playerGrid.setVgap(20);
-		playerGrid.setGridLinesVisible(true);
-		playerGrid.setAlignment(Pos.CENTER); 
+		playersGrid.setPadding(new Insets(25, 25, 25, 25));
+		playersGrid.setHgap(80);
+		playersGrid.setVgap(20);
+		playersGrid.setGridLinesVisible(true);
+		playersGrid.setAlignment(Pos.CENTER); 
 		
-		for(int i = 0; i < Players.size(); i++)
+		for(int i = 0; i < TextView.people.size(); i++)
 		{
-			Person player = Players.get(i);
+			Person player = TextView.people.get(i);
 			String name = player.getName();
-			playerGrid.add(new Label(name), 0, i);
-			playerGrid.add(new Label("0"), 1, i);
+			playersGrid.add(new Label(name), 0, i);
+			playersGrid.add(new Label("0"), 1, i);
 		}
-		return playerGrid;
+		return playersGrid;
 	}
 }
 
