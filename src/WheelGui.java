@@ -30,6 +30,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
+import javafx.scene.control.TextInputDialog;
 
 public class WheelGui extends Application {
 
@@ -45,6 +46,7 @@ public class WheelGui extends Application {
 	private List<Point> pointList = new ArrayList<>();
 	private Label selectedCategoryLabel = new Label();
 	private GridPane gameGrid = new GridPane();
+	private GridPane playerGrid = new GridPane();
 	WheelGui(List<Text> allCategories){
 		this.All_Categories = allCategories;
 	}
@@ -62,8 +64,6 @@ public class WheelGui extends Application {
 		
 		int randomCycle = (int) (Math.random() * (highCycle - lowCycle)) + lowCycle;
 		int randomTimeline = (int) (Math.random() * (highTimeline - lowTimeline)) + lowTimeline;
-		System.out.println("randomCycle |" + randomCycle);
-		System.out.println("randomTimeline |" + randomTimeline);
 		final Pane mainPane = new Pane();	
 		mainPane.setBackground(new Background(new BackgroundFill(Color.rgb(40, 40, 40), CornerRadii.EMPTY, Insets.EMPTY)));
 		WOJCategories.addAll(All_Categories);
@@ -112,6 +112,53 @@ public class WheelGui extends Application {
     	gameGrid = gridController.makeGrid();
     	mainPane.getChildren().add(gameGrid);
     	
+    	PlayerManager playerManager = new PlayerManager();
+    	
+    	Button addPlayerButton = new Button("Add Player");
+		addPlayerButton.setPrefHeight(40);
+    	addPlayerButton.setLayoutX(950);
+    	addPlayerButton.setLayoutY(300); 	
+    	
+    	Button doneAddingPlayers = new Button("Done Adding Players");
+		doneAddingPlayers.setPrefHeight(40);
+    	doneAddingPlayers.setLayoutX(950);
+    	doneAddingPlayers.setLayoutY(350); 
+    	
+    	TextInputDialog td = new TextInputDialog();
+    	td.setHeaderText("Enter Player Name");
+    	Label playerName = new Label();
+        EventHandler<ActionEvent> addPlayerEvent = new EventHandler<ActionEvent>() 
+        { 
+            public void handle(ActionEvent e) 
+            { 
+                td.showAndWait();
+                playerName.setText(td.getEditor().getText());
+                Person currentPlayer = new Person(playerName.getText());
+                playerManager.addNewPlayer(currentPlayer);
+                TextView.people.add(currentPlayer);
+                td.getEditor().clear();
+            } 
+        };
+        addPlayerButton.setOnAction(addPlayerEvent);
+        GridPane playerGrid = playerManager.makePlayerGUI();
+        playerGrid.setLayoutX(950);
+        playerGrid.setLayoutY(400);
+        mainPane.getChildren().add(playerGrid);
+        
+        EventHandler<ActionEvent> doneAddingEvent = new EventHandler<ActionEvent>() 
+        { 
+            public void handle(ActionEvent e) 
+            { 
+            	addPlayerButton.setDisable(true);
+            } 
+        };
+        
+        doneAddingPlayers.setOnAction(doneAddingEvent);
+        
+        
+    	mainPane.getChildren().add(addPlayerButton);
+    	mainPane.getChildren().add(doneAddingPlayers);
+        
 	}
 	
 	private void setPlayer(Stage primaryStage) {
