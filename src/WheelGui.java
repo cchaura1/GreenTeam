@@ -1,5 +1,9 @@
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +15,16 @@ import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.animation.*;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -25,9 +34,11 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Duration;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.TextInputDialog;
@@ -46,16 +57,95 @@ public class WheelGui extends Application {
 	private List<Point> pointList = new ArrayList<>();
 	private Label selectedCategoryLabel = new Label();
 	private GridPane gameGrid = new GridPane();
-	private GridPane playerGrid = new GridPane();
 	WheelGui(List<Text> allCategories){
 		this.All_Categories = allCategories;
 	}
 	
 	@Override
 	public void start(Stage primaryStage) {
+		 primaryStage.setTitle("Player portal Wheel of Jeopardy");
+	        GridPane gridPane = createPlayerFormPane();
+	        addGUIAddPlayerControls(gridPane, primaryStage);
+	        Scene scene = new Scene(gridPane, 800, 500);
+	        primaryStage.setScene(scene);	        
+	        primaryStage.show(); 
+	}
+	public GridPane createPlayerFormPane() {
+	    GridPane gridPane = new GridPane();
+	    gridPane.setAlignment(Pos.CENTER);
+	    gridPane.setPadding(new Insets(40, 40, 40, 40));
+	    gridPane.setHgap(10);
+	    gridPane.setVgap(10);
+	    ColumnConstraints colConst = new ColumnConstraints(100, 100, Double.MAX_VALUE);
+	    colConst.setHalignment(HPos.RIGHT);
+	    ColumnConstraints col2Const = new ColumnConstraints(200,200, Double.MAX_VALUE);
+	    col2Const.setHgrow(Priority.ALWAYS);
+	    gridPane.getColumnConstraints().addAll(colConst, col2Const);
+	    return gridPane;
+	}
+	
+	public void addGUIAddPlayerControls(GridPane gridPane, Stage primaryStage) {
+	    Label headerLabel = new Label("Add Players");
+	    headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+	    gridPane.add(headerLabel, 0,0,2,1);
+	    GridPane.setHalignment(headerLabel, HPos.CENTER);
+	    GridPane.setMargin(headerLabel, new Insets(20, 0,20,0));
+
+	    Label nameLabel = new Label("Player Name : ");
+	    gridPane.add(nameLabel, 0,1);
+
+	    TextField nameField = new TextField();
+	    nameField.setPrefHeight(40);
+	    gridPane.add(nameField, 1,1);
+
+	    Button addButton = new Button("Add Player");
+	    addButton.setPrefHeight(40);
+	    addButton.setDefaultButton(true);
+	    addButton.setPrefWidth(100);
+	    gridPane.add(addButton, 0, 4, 2, 1);
+	    GridPane.setHalignment(addButton, HPos.CENTER);
+	    GridPane.setMargin(addButton, new Insets(20, 0,20,0));
+	    
+	    Button doneButton = new Button("Done adding players");
+	    doneButton.setPrefHeight(40);
+	    doneButton.setDefaultButton(true);
+	    doneButton.setPrefWidth(200);
+	    gridPane.add(doneButton, 0, 4, 2, 12);
+	    GridPane.setHalignment(doneButton, HPos.CENTER);
+	    GridPane.setMargin(doneButton, new Insets(20, 0,20,0));
+	    
+	    addButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(nameField.getText().isEmpty()) {
+                    showAlert(Alert.AlertType.ERROR, gridPane.getScene().getWindow(), "Form Error!", "Please enter a players name");
+                    return;
+                }
+                showAlert(Alert.AlertType.CONFIRMATION, gridPane.getScene().getWindow(), "Added Successfully!", "Player name: " + nameField.getText());
+                TextView.people.add(new Person(nameField.getText()));
+                nameField.setText("");
+            }
+        });
+	    
+	    doneButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+            	 TextView.createPeople();
+            	initiateWOJBoard(primaryStage);
+            }
+        });
+	}
+	
+	   public void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
+	        Alert alert = new Alert(alertType);
+	        alert.setTitle(title);
+	        alert.setHeaderText(null);
+	        alert.setContentText(message);
+	        alert.initOwner(owner);
+	        alert.show();
+	    }
+	private void initiateWOJBoard(Stage primaryStage) {
 		
-		//setPlayer(primaryStage);
-		Random r = new Random();
 		int lowCycle = 7;
 		int highCycle = 16;
 		int lowTimeline = 3;
@@ -102,6 +192,26 @@ public class WheelGui extends Application {
 	    rectangle.setArcHeight(20.0); 
 		mainPane.getChildren().add(rectangle);		
 		mainPane.getChildren().addAll(WOJCategories);
+		
+		//Show players list
+		List<String> playerList = new ArrayList<String>(); 
+		for (Person player : TextView.people ){
+			playerList.add(player.getName());
+		}
+		ListView<String> list = new ListView<String>();
+		ObservableList<String> items = FXCollections.observableArrayList (
+				playerList);
+		list.setItems(items);
+		list.setPrefWidth(200);
+		list.setPrefHeight(70);
+		 VBox box = new VBox();
+		 box.setSpacing(10);
+		 box.getChildren().addAll(list);		
+		 box.setLayoutX(10);
+		 box.setLayoutY(320);
+		
+		mainPane.getChildren().add(box);
+		
 		Scene scene = new Scene(mainPane, Screen_WIDHT, Screen_Height);	
 		primaryStage.setTitle("Green Team Wheel Of Jeopardy");
 		primaryStage.setScene(scene);	
@@ -112,65 +222,8 @@ public class WheelGui extends Application {
     	gameGrid = gridController.makeGrid();
     	mainPane.getChildren().add(gameGrid);
     	
-    	PlayerManager playerManager = new PlayerManager();
-    	
-    	Button addPlayerButton = new Button("Add Player");
-		addPlayerButton.setPrefHeight(40);
-    	addPlayerButton.setLayoutX(950);
-    	addPlayerButton.setLayoutY(300); 	
-    	
-    	Button doneAddingPlayers = new Button("Done Adding Players");
-		doneAddingPlayers.setPrefHeight(40);
-    	doneAddingPlayers.setLayoutX(950);
-    	doneAddingPlayers.setLayoutY(350); 
-    	
-    	TextInputDialog td = new TextInputDialog();
-    	td.setHeaderText("Enter Player Name");
-    	Label playerName = new Label();
-        EventHandler<ActionEvent> addPlayerEvent = new EventHandler<ActionEvent>() 
-        { 
-            public void handle(ActionEvent e) 
-            { 
-                td.showAndWait();
-                playerName.setText(td.getEditor().getText());
-                Person currentPlayer = new Person(playerName.getText());
-                playerManager.addNewPlayer(currentPlayer);
-                TextView.people.add(currentPlayer);
-                td.getEditor().clear();
-            } 
-        };
-        addPlayerButton.setOnAction(addPlayerEvent);
-        GridPane playerGrid = playerManager.makePlayerGUI();
-        playerGrid.setLayoutX(950);
-        playerGrid.setLayoutY(400);
-        mainPane.getChildren().add(playerGrid);
-        
-        EventHandler<ActionEvent> doneAddingEvent = new EventHandler<ActionEvent>() 
-        { 
-            public void handle(ActionEvent e) 
-            { 
-            	addPlayerButton.setDisable(true);
-            } 
-        };
-        
-        doneAddingPlayers.setOnAction(doneAddingEvent);
-        
-        
-    	mainPane.getChildren().add(addPlayerButton);
-    	mainPane.getChildren().add(doneAddingPlayers);
-        
 	}
 	
-	private void setPlayer(Stage primaryStage) {
-		final Stage dialog = new Stage();
-        dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.initOwner(primaryStage);
-        VBox dialogVbox = new VBox(20);
-        dialogVbox.getChildren().add(new Text("This is a Dialog"));
-        Scene dialogScene = new Scene(dialogVbox, 300, 200);
-        dialog.setScene(dialogScene);
-        dialog.show();
-	}
 	
 	private Timeline createTimeline(final Pane root, final KeyFrame duration, final Timeline nextTimeline) {
 		final Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, new EventHandler<ActionEvent>() {
@@ -192,7 +245,7 @@ public class WheelGui extends Application {
 				//Display end result here..
 					for (Point key : pointList) {
 						if((int)key.x == 400 && (int)key.y == 500) {
-							selectedCategoryLabel.setText("Selected Category: "+key.name);
+							selectedCategoryLabel.setText("The category that was spun is: "+key.name);
 													
 							gridController.processCategory(key.name, gameGrid);
 						}

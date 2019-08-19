@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+
 public class TextView {
 	
 	public static List<Person> people = new ArrayList<Person>();
@@ -20,30 +21,6 @@ public class TextView {
 
     // some gui function to create the people playing
     public static List<Person> createPeople() {
-
-//        List<Person> people = new ArrayList<Person>();
-////        boolean add_more_people = true;
-//
-////        Scanner input = new Scanner(System. in);
-////        while (add_more_people) {
-////            System.out.print("Enter the name of the next Person (or 'done' if done): ");
-////            String name = input.nextLine();
-////
-////            if (!name.equals("done")) {
-////                Person person = new Person(name);
-////                people.add(person);
-////            }
-////            else {
-////                add_more_people = false;
-////            }
-////        }
-//
-//        // uncomment the previous lines for a more interactive experience
-        Person Brian = new Person("Brian");
-        Person Jerry = new Person("Jerry");
-        people.add(Brian);
-        people.add(Jerry);
-
         return people;
     }
 

@@ -82,24 +82,7 @@ public class PlayerManager
         }
         return numRows;
     }
-	
-	public GridPane makePlayerGUI()
-	{
-		playersGrid.setPadding(new Insets(25, 25, 25, 25));
-		playersGrid.setHgap(80);
-		playersGrid.setVgap(20);
-		playersGrid.setGridLinesVisible(true);
-		playersGrid.setAlignment(Pos.CENTER); 
-		
-		for(int i = 0; i < TextView.people.size(); i++)
-		{
-			Person player = TextView.people.get(i);
-			String name = player.getName();
-			playersGrid.add(new Label(name), 0, i);
-			playersGrid.add(new Label("0"), 1, i);
-		}
-		return playersGrid;
-	}
+
 }
 
 
