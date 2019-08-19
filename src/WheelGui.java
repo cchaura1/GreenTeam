@@ -72,6 +72,7 @@ public class WheelGui extends Application {
 	}
 	public GridPane createPlayerFormPane() {
 	    GridPane gridPane = new GridPane();
+	    gridPane.setBackground(new Background(new BackgroundFill(Color.rgb(40, 40, 40), CornerRadii.EMPTY, Insets.EMPTY)));
 	    gridPane.setAlignment(Pos.CENTER);
 	    gridPane.setPadding(new Insets(40, 40, 40, 40));
 	    gridPane.setHgap(10);
@@ -87,11 +88,13 @@ public class WheelGui extends Application {
 	public void addGUIAddPlayerControls(GridPane gridPane, Stage primaryStage) {
 	    Label headerLabel = new Label("Add Players");
 	    headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+	    headerLabel.setTextFill(Color.ANTIQUEWHITE);
 	    gridPane.add(headerLabel, 0,0,2,1);
 	    GridPane.setHalignment(headerLabel, HPos.CENTER);
 	    GridPane.setMargin(headerLabel, new Insets(20, 0,20,0));
 
 	    Label nameLabel = new Label("Player Name : ");
+	    nameLabel.setTextFill(Color.ANTIQUEWHITE);
 	    gridPane.add(nameLabel, 0,1);
 
 	    TextField nameField = new TextField();
