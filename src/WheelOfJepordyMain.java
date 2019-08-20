@@ -18,7 +18,9 @@ public class WheelOfJepordyMain extends Application {
     // when we want to switch to Chetan's GUI we can just hot swap the views
     // this will require Chetan to have all of the methods that my view has
     static TextView view = new TextView();
-    static List<Text> mycategories = new ArrayList<Text>();
+    static Wheel wheel;
+    static QuestionBoard board;
+    
     public static void main(String args[]) {
 
 //        // initialize the game
@@ -31,18 +33,12 @@ public class WheelOfJepordyMain extends Application {
 //        boolean use_free_turn = false;
 
         // create the board and wheel for round 1
-        QuestionBoard board = new QuestionBoard("board1.json", round);
-        Wheel wheel = new Wheel(board);
+        board = new QuestionBoard("board1.json", round);
+        wheel = new Wheel(board);
         
 //        //***********Initiating GUI**********************
-        for(String key: wheel.getSectors()) {
-        	Text t = new Text();
-        	t.setText(key);
-            mycategories.add(t);
-        }
-     
-        WheelGui ob = new WheelGui(mycategories);
-  
+       
+        WheelGui ob = new WheelGui(wheel, board);
     	ob.launch(args);
 // 
     	//***********************************************
@@ -264,22 +260,22 @@ public class WheelOfJepordyMain extends Application {
      *
      * @return whether the player uses a free turn token
      */
-    public static boolean loseTurn(Person current_player) {
-
-        boolean use_token = false;
-
-        // check if the player has a token
-        if (current_player.getFree_turns() > 0) {
-            use_token = view.checkUseFreeTurn();
-
-            // track that the player used their free turn
-            if (use_token) {
-                current_player.useOneFreeTurn();
-            }
-        }
-
-        return use_token;
-    }
+//    public static boolean loseTurn(Person current_player) {
+//
+//        boolean use_token = false;
+//
+//        // check if the player has a token
+//        if (current_player.getFree_turns() > 0) {
+//            use_token = view.checkUseFreeTurn();
+//
+//            // track that the player used their free turn
+//            if (use_token) {
+//                current_player.useOneFreeTurn();
+//            }
+//        }
+//
+//        return use_token;
+//    }
 
     /**
      * add a free turn to the current player
@@ -395,7 +391,7 @@ public class WheelOfJepordyMain extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
-		WheelGui obj = new WheelGui(mycategories);
+		WheelGui obj = new WheelGui(wheel, board);
 		obj.start(primaryStage);
 	}
 }

@@ -1,6 +1,12 @@
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.ParallelTransition;
 import javafx.animation.Timeline;
@@ -11,11 +17,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.layout.Background;
@@ -33,10 +41,14 @@ import javafx.geometry.Insets;
 public class JeopardyGrid
 {
 	private List<Text> All_Categories;
+	private QuestionBoard board;
+	private GridPane gridPane;
 	
-	JeopardyGrid(List<Text> allCategories)
+	JeopardyGrid(List<Text> allCategories, QuestionBoard board, GridPane gridPane)
 	{
 		this.All_Categories = allCategories;
+		this.board = board;
+		this.gridPane = gridPane;
 	}
 	
 	public GridPane makeGrid()
@@ -143,6 +155,7 @@ public class JeopardyGrid
 				disableButton(gameGrid, 0, 0);
 			}
 			disableButton(gameGrid, gridRow, 0);
+			SwitchPlayer();
 		}
 		else if(category.equals(All_Categories.get(1).getText()))
 		{			
@@ -152,6 +165,7 @@ public class JeopardyGrid
 				disableButton(gameGrid, 0, 1);
 			}
 			disableButton(gameGrid, gridRow, 1);
+			SwitchPlayer();
 		}
 		else if(category.equals(All_Categories.get(2).getText()))
 		{			
@@ -161,6 +175,7 @@ public class JeopardyGrid
 				disableButton(gameGrid, 0, 2);
 			}
 			disableButton(gameGrid, gridRow, 2);
+			SwitchPlayer();
 		}
 		else if(category.equals(All_Categories.get(3).getText()))
 		{			
@@ -170,6 +185,7 @@ public class JeopardyGrid
 				disableButton(gameGrid, 0, 3);
 			}
 			disableButton(gameGrid, gridRow, 3);
+			SwitchPlayer();
 		}
 		else if(category.equals(All_Categories.get(4).getText()))
 		{			
@@ -179,6 +195,7 @@ public class JeopardyGrid
 				disableButton(gameGrid, 0, 4);
 			}
 			disableButton(gameGrid, gridRow, 4);
+			SwitchPlayer();
 		}
 		else if(category.equals(All_Categories.get(5).getText()))
 		{			
@@ -188,13 +205,87 @@ public class JeopardyGrid
 				disableButton(gameGrid, 0, 5);
 			}
 			disableButton(gameGrid, gridRow, 5);
+			SwitchPlayer();
 		}
 		else if(category.equals("Opponent's Choice") || category.equals("Player's Choice"))
 		{			
 			chooseCategory(gameGrid);
+			SwitchPlayer();
 		}	
+		else if(category.equals("Lose Turn"))
+		{			
+			if(TextView.current_player.getFree_turns() > 0) {			
+				confirmationToUseToken(category);
+			}
+			else {
+				SwitchPlayer();
+			}				 
+		}	
+		else if(category.equals("Free Turn"))
+		{							
+				TextView.current_player.addOneFreeTurn();
 
+			 SwitchPlayer();
+		}
+		else if(category.equals("Bankrupt"))
+		{			
+			 SwitchPlayer();
+		}
+		else if(category.equals("Double your Score"))
+		{			
+			 SwitchPlayer();
+		}
+		
 	}
+	
+	public void SwitchPlayer() {
+		String previous = TextView.current_player.getName();
+		if(previous.equals(TextView.people.get(0).getName())) {
+			TextView.updateCurrentPlayer(TextView.people.get(1));
+			WheelGui.activePlayerLabel.setText("Current Active Player :"+TextView.people.get(1).getName());
+			 WheelGui.activePlayerTokenLabel.setText("Available Tokens: "+TextView.people.get(1).getFree_turns());
+			System.out.print("Current "+TextView.current_player.getName()+ "| Switching to "+ TextView.people.get(1).getName());
+		}
+		if(previous.equals(TextView.people.get(1).getName())) {
+			TextView.updateCurrentPlayer(TextView.people.get(0));
+			WheelGui.activePlayerLabel.setText("Current Active Player :"+TextView.people.get(0).getName());
+			WheelGui.activePlayerTokenLabel.setText("Available Tokens: "+TextView.people.get(0).getFree_turns());
+			System.out.print("Current "+TextView.current_player.getName()+ "| Switching to "+ TextView.people.get(0).getName());
+		}
+	}
+	
+	public void confirmationToUseToken(String category) {
+		Stage dialogStage = new Stage();
+		dialogStage.initModality(Modality.WINDOW_MODAL);
+
+		Button yesButton = new Button("Yes");
+		Button noButton = new Button("No");
+		VBox vbox = new VBox(new Text("Would you like to you use token?"), yesButton, noButton);
+		vbox.setAlignment(Pos.CENTER);
+		vbox.setPadding(new Insets(15));
+		dialogStage.setScene(new Scene(vbox));
+		dialogStage.show();
+		
+		yesButton.setOnAction(new EventHandler<ActionEvent>() {
+	            @Override
+	            public void handle(ActionEvent event) {
+	            	//Deduct the token here and respond to yes
+	            	dialogStage.close();
+			            // track that the player used their free turn
+			 
+			                TextView.current_player.useOneFreeTurn();
+			                     	
+	            }
+	        });
+		noButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+            	SwitchPlayer();
+            	dialogStage.close();           	
+            }
+        });
+	}
+	
 
 	public void chooseCategory(GridPane gameGrid) 
 	{

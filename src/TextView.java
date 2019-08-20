@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 
 public class TextView {
-	
+	public static Person current_player ;
 	public static List<Person> people = new ArrayList<Person>();
 
     TextView() {
@@ -28,6 +28,7 @@ public class TextView {
     // Even if we just make their name bold, something
     public static void updateCurrentPlayer(Person player) {
         System.out.println("\n\nThe current player is: " + player.getName());
+        current_player = player;
     }
 
     // show the result of spinning the wheel
@@ -36,19 +37,19 @@ public class TextView {
     }
 
     // check with the current player if they want to use their free turn
-    public static boolean checkUseFreeTurn() {
-        boolean use_turn = true;
-
-        Scanner input = new Scanner(System. in);
-        System.out.print("Would you like to use a free turn? (y or n): ");
-        String use_turn_string = input.nextLine();
-
-        if (!use_turn_string.equals("y")) {
-            use_turn = false;
-        }
-
-        return use_turn;
-    }
+//    public static boolean checkUseFreeTurn() {
+//        boolean use_turn = true;
+//
+//        Scanner input = new Scanner(System. in);
+//        System.out.print("Would you like to use a free turn? (y or n): ");
+//        String use_turn_string = input.nextLine();
+//
+//        if (!use_turn_string.equals("y")) {
+//            use_turn = false;
+//        }
+//
+//        return use_turn;
+//    }
 
     public static void updatePeople(List<Person> people) {
         for (Person person: people) {

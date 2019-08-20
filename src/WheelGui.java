@@ -57,9 +57,24 @@ public class WheelGui extends Application {
 	private List<Point> pointList = new ArrayList<>();
 	private Label selectedCategoryLabel = new Label();
 	private GridPane gameGrid = new GridPane();
-	WheelGui(List<Text> allCategories){
-		this.All_Categories = allCategories;
+	static List<Text> mycategories;
+	static Label activePlayerLabel;
+	static Label activePlayerTokenLabel;
+	static GridPane gridPane;
+	private QuestionBoard board;
+	int cyclesPerTimeline;
+	WheelGui(Wheel wheel, QuestionBoard board){
+		mycategories = new ArrayList<Text>(); 
+	    for(String key: wheel.getSectors()) {
+        	Text t = new Text();
+        	t.setText(key);
+            mycategories.add(t);
+        }
+		this.All_Categories = mycategories;
+		this.board = board;
+		
 	}
+	
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -71,7 +86,7 @@ public class WheelGui extends Application {
 	        primaryStage.show(); 
 	}
 	public GridPane createPlayerFormPane() {
-	    GridPane gridPane = new GridPane();
+	    gridPane = new GridPane();
 	    gridPane.setBackground(new Background(new BackgroundFill(Color.rgb(40, 40, 40), CornerRadii.EMPTY, Insets.EMPTY)));
 	    gridPane.setAlignment(Pos.CENTER);
 	    gridPane.setPadding(new Insets(40, 40, 40, 40));
@@ -149,14 +164,14 @@ public class WheelGui extends Application {
 	    }
 	private void initiateWOJBoard(Stage primaryStage) {
 		
-		int lowCycle = 7;
-		int highCycle = 16;
-		int lowTimeline = 3;
-		int highTimeline = 8;
+//		int lowCycle = 7;
+//		int highCycle = 16;
+//		int lowTimeline = 3;
+//		int highTimeline = 8;
 		int pos = 0;
 		
-		int randomCycle = (int) (Math.random() * (highCycle - lowCycle)) + lowCycle;
-		int randomTimeline = (int) (Math.random() * (highTimeline - lowTimeline)) + lowTimeline;
+//		int randomCycle = (int) (Math.random() * (highCycle - lowCycle)) + lowCycle;
+//		int randomTimeline = (int) (Math.random() * (highTimeline - lowTimeline)) + lowTimeline;
 		final Pane mainPane = new Pane();	
 		mainPane.setBackground(new Background(new BackgroundFill(Color.rgb(40, 40, 40), CornerRadii.EMPTY, Insets.EMPTY)));
 		WOJCategories.addAll(All_Categories);
@@ -165,10 +180,10 @@ public class WheelGui extends Application {
 		}
 	
 		points = calculatePoints(WOJCategories.size(), WOJ_CENTER_X, WOJ_CENTER_Y, ORBIT);
-		int cyclesPerTimeline = randomCycle;
+		cyclesPerTimeline = 6;
 		Timeline nextTimeline = null;
 		
-		for (int numberOfTimelines = randomTimeline; numberOfTimelines > 0; numberOfTimelines--) {
+		for (int numberOfTimelines = 2; numberOfTimelines > 0; numberOfTimelines--) {
 			final KeyFrame duration = new KeyFrame(Duration.millis(60 * numberOfTimelines));
 			nextTimeline = createTimeline(mainPane, duration, nextTimeline);
 			nextTimeline.setCycleCount(cyclesPerTimeline);
@@ -207,13 +222,33 @@ public class WheelGui extends Application {
 		list.setItems(items);
 		list.setPrefWidth(200);
 		list.setPrefHeight(70);
-		 VBox box = new VBox();
-		 box.setSpacing(10);
-		 box.getChildren().addAll(list);		
-		 box.setLayoutX(10);
-		 box.setLayoutY(320);
+		 VBox Playerbox = new VBox();
+		 Playerbox.setSpacing(10);
+		 Playerbox.getChildren().addAll(list);	
+		 TextView.updateCurrentPlayer(TextView.people.get(0));
+		 displaycurrentPlayer(mainPane, TextView.people.get(0));
+		 Playerbox.setLayoutX(10);
+		 Playerbox.setLayoutY(320);
+		mainPane.getChildren().add(Playerbox);
 		
-		mainPane.getChildren().add(box);
+//		ListView<String> PlayerScorelist = new ListView<String>();
+//		List<String> PlayerScoreItems = new ArrayList<String>(); 
+//		PlayerScoreItems.add("Round 1");
+//		PlayerScoreItems.add("Player 1 Score: ");
+//		PlayerScoreItems.add("Player 2 Score: ");
+//		ObservableList<String> Scoreitems = FXCollections.observableArrayList (
+//				PlayerScoreItems);
+//		PlayerScorelist.setItems(Scoreitems);
+//		PlayerScorelist.setPrefWidth(200);
+//		PlayerScorelist.setPrefHeight(100);
+//		 VBox PlayerScorebox = new VBox();
+//		 PlayerScorebox.setSpacing(10);
+//		 PlayerScorebox.getChildren().addAll(PlayerScorelist);		
+//		 PlayerScorebox.setLayoutX(10);
+//		 PlayerScorebox.setLayoutY(450);
+//		mainPane.getChildren().add(PlayerScorebox);
+		
+		
 		
 		Scene scene = new Scene(mainPane, Screen_WIDHT, Screen_Height);	
 		primaryStage.setTitle("Green Team Wheel Of Jeopardy");
@@ -221,12 +256,31 @@ public class WheelGui extends Application {
 		primaryStage.show();
 		nextTimeline.play();
 		
-    	JeopardyGrid gridController = new JeopardyGrid(All_Categories);
+    	JeopardyGrid gridController = new JeopardyGrid(All_Categories, board, gridPane);
     	gameGrid = gridController.makeGrid();
     	mainPane.getChildren().add(gameGrid);
     	
 	}
 	
+	public static void displaycurrentPlayer(Pane mainPane, Person playerName) {
+		  activePlayerLabel = new Label("Current Active Player :"+playerName.getName());
+		  activePlayerLabel.setTextFill(Color.ANTIQUEWHITE);
+		  activePlayerLabel.setLayoutX(10);
+		  activePlayerLabel.setLayoutY(400);
+		    mainPane.getChildren().add(activePlayerLabel);
+		   // mainPane.add(activePlayerLabel, 0,1);
+		    
+		  displaycurrentTokenStatus(mainPane, playerName); 
+		
+	}
+	
+	public static void displaycurrentTokenStatus(Pane mainPane,  Person activePlayer) {
+		  activePlayerTokenLabel = new Label("Available Tokens: "+activePlayer.getFree_turns());
+		  activePlayerTokenLabel.setTextFill(Color.ANTIQUEWHITE);
+		  activePlayerTokenLabel.setLayoutX(10);
+		  activePlayerTokenLabel.setLayoutY(430);
+		    mainPane.getChildren().add(activePlayerTokenLabel);	
+	}
 	
 	private Timeline createTimeline(final Pane root, final KeyFrame duration, final Timeline nextTimeline) {
 		final Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, new EventHandler<ActionEvent>() {
@@ -237,7 +291,7 @@ public class WheelGui extends Application {
 			}
 		}), duration);
 		
-    	JeopardyGrid gridController = new JeopardyGrid(All_Categories);
+    	JeopardyGrid gridController = new JeopardyGrid(All_Categories, board, gridPane);
 		
 		timeline.setOnFinished(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
@@ -266,7 +320,11 @@ public class WheelGui extends Application {
 		btn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				  nextTimeline.play();
+				Random r = new Random();
+				cyclesPerTimeline = r.nextInt((14 - 3) + 3)+1 ;
+				nextTimeline.setCycleCount(cyclesPerTimeline);
+//				System.out.print(">>>>"+cyclesPerTimeline);
+				nextTimeline.play();
 			}
 		});
 	
