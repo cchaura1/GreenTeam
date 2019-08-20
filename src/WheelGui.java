@@ -60,9 +60,11 @@ public class WheelGui extends Application {
 	static List<Text> mycategories;
 	static Label activePlayerLabel;
 	static Label activePlayerTokenLabel;
+	static Label playersScore;
 	static GridPane gridPane;
 	private QuestionBoard board;
 	int cyclesPerTimeline;
+	static int round = 1;
 	WheelGui(Wheel wheel, QuestionBoard board){
 		mycategories = new ArrayList<Text>(); 
 	    for(String key: wheel.getSectors()) {
@@ -227,6 +229,7 @@ public class WheelGui extends Application {
 		 Playerbox.getChildren().addAll(list);	
 		 TextView.updateCurrentPlayer(TextView.people.get(0));
 		 displaycurrentPlayer(mainPane, TextView.people.get(0));
+		 displayPlayersScore(mainPane, TextView.people.get(0), TextView.people.get(1));
 		 Playerbox.setLayoutX(10);
 		 Playerbox.setLayoutY(320);
 		mainPane.getChildren().add(Playerbox);
@@ -280,6 +283,14 @@ public class WheelGui extends Application {
 		  activePlayerTokenLabel.setLayoutX(10);
 		  activePlayerTokenLabel.setLayoutY(430);
 		    mainPane.getChildren().add(activePlayerTokenLabel);	
+	}
+	
+	public static void displayPlayersScore(Pane mainPane,  Person player1, Person player2) {
+		  playersScore = new Label(player1.toString() + "\n\n"+ player2.toString());
+		  playersScore.setTextFill(Color.ANTIQUEWHITE);
+		  playersScore.setLayoutX(10);
+		  playersScore.setLayoutY(450);
+		    mainPane.getChildren().add(playersScore);	
 	}
 	
 	private Timeline createTimeline(final Pane root, final KeyFrame duration, final Timeline nextTimeline) {
