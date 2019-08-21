@@ -68,7 +68,8 @@ public class WheelGui extends Application {
 	static Wheel wheel2;
 	int cyclesPerTimeline;
 	static int round = 1;
-	static int spins = 5; 
+	final static int spinVal = 5;
+	static int spins = spinVal; 
 	static JeopardyGrid gridController;
 	static Stage primaryStage;
 	static Pane mainPane;
@@ -128,6 +129,8 @@ public class WheelGui extends Application {
 	    TextField nameField = new TextField();
 	    nameField.setPrefHeight(40);
 	    gridPane.add(nameField, 1,1);
+	    
+
 	    
 //	    Label powerText = new Label("Powered by Green Team");
 //	    powerText.setFont(Font.font("Arial", FontPosture.ITALIC, 8));
@@ -256,20 +259,9 @@ public class WheelGui extends Application {
 		  activePlayerLabel.setLayoutX(10);
 		  activePlayerLabel.setLayoutY(400);
 		    mainPane.getChildren().add(activePlayerLabel);
-		   // mainPane.add(activePlayerLabel, 0,1);
-		    
-		//  displaycurrentTokenStatus(mainPane, playerName); 
 		
 	}
-	
-//	public static void displaycurrentTokenStatus(Pane mainPane,  Person activePlayer) {
-//		  activePlayerTokenLabel = new Label("Available Tokens: "+activePlayer.getFree_turns());
-//		  activePlayerTokenLabel.setTextFill(Color.ANTIQUEWHITE);
-//		  activePlayerTokenLabel.setLayoutX(10);
-//		  activePlayerTokenLabel.setLayoutY(430);
-//		    mainPane.getChildren().add(activePlayerTokenLabel);	
-//	}
-//	
+
 	public static void displayPlayersScore(Pane mainPane,  Person player1, Person player2) {
 		  playersScore = new Label(player1.toString() + "\n\n"+ player2.toString());
 		  playersScore.setTextFill(Color.ANTIQUEWHITE);
@@ -299,9 +291,10 @@ public class WheelGui extends Application {
 					
 				//Display end result here..
 					for (Point key : pointList) {
-						if((int)key.x == 400 && (int)key.y == 500) {					
-								selectedCategoryLabel.setText("The category that was spun is: "+key.name + "\nSpins Remaining: "+spins + "\n\nCurrent Round: "+round);													
-								gridController.processCategory(key.name, gameGrid);
+						if((int)key.x == 400 && (int)key.y == 500) {		
+							selectedCategoryLabel.setText("The category that was spun is: "+key.name + "\nSpins Remaining: "+spins + "\n\nCurrent Round: "+round);													
+							gridController.processCategory(key.name, gameGrid);
+								
 											
 						}
 	
@@ -320,7 +313,7 @@ public class WheelGui extends Application {
 			public void handle(ActionEvent event) {
 				if(round == 1 && isRoundOver(board1, wheel1)) {
 					round = 2;
-					spins = 5;
+					spins = spinVal;
 					//Update the allcategories
 					 All_Categories.clear();
 					  for(String key: wheel2.getSectors()) {
