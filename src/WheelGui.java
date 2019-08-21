@@ -68,7 +68,7 @@ public class WheelGui extends Application {
 	static Wheel wheel2;
 	int cyclesPerTimeline;
 	static int round = 1;
-	final static int spinVal = 5;
+	final static int spinVal = 50;
 	static int spins = spinVal; 
 	static JeopardyGrid gridController;
 	static Stage primaryStage;
@@ -180,7 +180,7 @@ public class WheelGui extends Application {
         });
 	}
 	
-	   public void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
+	   public static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
 	        Alert alert = new Alert(alertType);
 	        alert.setTitle(title);
 	        alert.setHeaderText(null);

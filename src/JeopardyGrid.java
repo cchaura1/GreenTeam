@@ -59,7 +59,7 @@ public class JeopardyGrid
 		
 		GridPane game_grid = new GridPane();
 		game_grid.setPadding(new Insets(10, 10, 10, 10));
-		game_grid.setHgap(80);
+		game_grid.setHgap(25);
 		game_grid.setVgap(20);
 		game_grid.setGridLinesVisible(true);
 		game_grid.setAlignment(Pos.CENTER); 
@@ -159,15 +159,15 @@ public class JeopardyGrid
 	public void processCategory(String category, GridPane gameGrid) 
 	{
 		Integer gridRow = 0;
-		if(WheelGui.round == 2) {
-			System.out.print("Stop here");
-		}
+		
 		if(category.equals(All_Categories.get(0).getText()))
 		{			
 			gridRow = findNextButton(gameGrid, 0);
 			if(gridRow == 5)
 			{
 				disableButton(gameGrid, 0, 0);
+		       // WheelGui.showAlert(Alert.AlertType.CONFIRMATION, gameGrid.getScene().getWindow(), "Category is full!!", category);
+				return;
 			}
 			disableButton(gameGrid, gridRow, 0);
 			displayQuestion(category);
@@ -180,6 +180,8 @@ public class JeopardyGrid
 			if(gridRow == 5)
 			{
 				disableButton(gameGrid, 0, 1);
+			//	WheelGui.showAlert(Alert.AlertType.CONFIRMATION, gameGrid.getScene().getWindow(), "Category is full!!", category);
+				return;
 			}
 			disableButton(gameGrid, gridRow, 1);
 			displayQuestion(category);
@@ -191,6 +193,8 @@ public class JeopardyGrid
 			if(gridRow == 5)
 			{
 				disableButton(gameGrid, 0, 2);
+			//	WheelGui.showAlert(Alert.AlertType.CONFIRMATION, gameGrid.getScene().getWindow(), "Category is full!!", category);
+				return;
 			}
 			disableButton(gameGrid, gridRow, 2);
 			displayQuestion(category);
@@ -202,6 +206,8 @@ public class JeopardyGrid
 			if(gridRow == 5)
 			{
 				disableButton(gameGrid, 0, 3);
+			//	WheelGui.showAlert(Alert.AlertType.CONFIRMATION, gameGrid.getScene().getWindow(), "Category is full!!", category);
+				return;
 			}
 			disableButton(gameGrid, gridRow, 3);
 			displayQuestion(category);
@@ -213,6 +219,8 @@ public class JeopardyGrid
 			if(gridRow == 5)
 			{
 				disableButton(gameGrid, 0, 4);
+			//	WheelGui.showAlert(Alert.AlertType.CONFIRMATION, gameGrid.getScene().getWindow(), "Category is full!!", category);
+				return;
 			}
 			disableButton(gameGrid, gridRow, 4);
 			displayQuestion(category);
@@ -224,6 +232,8 @@ public class JeopardyGrid
 			if(gridRow == 5)
 			{
 				disableButton(gameGrid, 0, 5);
+			//	WheelGui.showAlert(Alert.AlertType.CONFIRMATION, gameGrid.getScene().getWindow(), "Category is full!!", category);
+				return;
 			}
 			disableButton(gameGrid, gridRow, 5);
 			displayQuestion(category);
@@ -289,6 +299,7 @@ public class JeopardyGrid
 
 	public void confirmationToUseToken(String category) {
 		Stage dialogStage = new Stage();
+		dialogStage.setTitle(category);
 		dialogStage.initModality(Modality.WINDOW_MODAL);
 
 		Button yesButton = new Button("Yes");
