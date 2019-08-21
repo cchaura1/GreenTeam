@@ -30,6 +30,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -59,27 +60,37 @@ public class WheelGui extends Application {
 	private GridPane gameGrid = new GridPane();
 	static List<Text> mycategories;
 	static Label activePlayerLabel;
-	static Label activePlayerTokenLabel;
 	static Label playersScore;
 	static GridPane gridPane;
-	private QuestionBoard board;
+	static QuestionBoard board1;
+	static QuestionBoard board2;
+	static Wheel wheel1;
+	static Wheel wheel2;
 	int cyclesPerTimeline;
 	static int round = 1;
-	WheelGui(Wheel wheel, QuestionBoard board){
+	static int spins = 5; 
+	static JeopardyGrid gridController;
+	static Stage primaryStage;
+	static Pane mainPane;
+	WheelGui(Wheel wheel1,Wheel wheel2, QuestionBoard board1, QuestionBoard board2){
 		mycategories = new ArrayList<Text>(); 
-	    for(String key: wheel.getSectors()) {
+	    for(String key: wheel1.getSectors()) {
         	Text t = new Text();
         	t.setText(key);
             mycategories.add(t);
         }
 		this.All_Categories = mycategories;
-		this.board = board;
+		WheelGui.board1 = board1;
+		WheelGui.board2 = board2;
+		WheelGui.wheel1 = wheel1;
+		WheelGui.wheel2 = wheel2;
 		
 	}
 	
 	
 	@Override
 	public void start(Stage primaryStage) {
+		 WheelGui.primaryStage = primaryStage;
 		 primaryStage.setTitle("Player portal Wheel of Jeopardy");
 	        GridPane gridPane = createPlayerFormPane();
 	        addGUIAddPlayerControls(gridPane, primaryStage);
@@ -117,6 +128,16 @@ public class WheelGui extends Application {
 	    TextField nameField = new TextField();
 	    nameField.setPrefHeight(40);
 	    gridPane.add(nameField, 1,1);
+	    
+//	    Label powerText = new Label("Powered by Green Team");
+//	    powerText.setFont(Font.font("Arial", FontPosture.ITALIC, 8));
+//	    powerText.setTextFill(Color.LIGHTGREEN);
+//	 //   powerText.setPrefHeight(80);
+//	    powerText.setLayoutX(500);
+//	    powerText.setLayoutY(500);
+//	    GridPane.getChildren().add(powerText);
+	    
+	   
 
 	    Button addButton = new Button("Add Player");
 	    addButton.setPrefHeight(40);
@@ -165,16 +186,10 @@ public class WheelGui extends Application {
 	        alert.show();
 	    }
 	private void initiateWOJBoard(Stage primaryStage) {
-		
-//		int lowCycle = 7;
-//		int highCycle = 16;
-//		int lowTimeline = 3;
-//		int highTimeline = 8;
+
 		int pos = 0;
-		
-//		int randomCycle = (int) (Math.random() * (highCycle - lowCycle)) + lowCycle;
-//		int randomTimeline = (int) (Math.random() * (highTimeline - lowTimeline)) + lowTimeline;
-		final Pane mainPane = new Pane();	
+
+		mainPane = new Pane();	
 		mainPane.setBackground(new Background(new BackgroundFill(Color.rgb(40, 40, 40), CornerRadii.EMPTY, Insets.EMPTY)));
 		WOJCategories.addAll(All_Categories);
 		for (Text key : WOJCategories) {
@@ -218,48 +233,18 @@ public class WheelGui extends Application {
 		for (Person player : TextView.people ){
 			playerList.add(player.getName());
 		}
-		ListView<String> list = new ListView<String>();
-		ObservableList<String> items = FXCollections.observableArrayList (
-				playerList);
-		list.setItems(items);
-		list.setPrefWidth(200);
-		list.setPrefHeight(70);
-		 VBox Playerbox = new VBox();
-		 Playerbox.setSpacing(10);
-		 Playerbox.getChildren().addAll(list);	
+
 		 TextView.updateCurrentPlayer(TextView.people.get(0));
 		 displaycurrentPlayer(mainPane, TextView.people.get(0));
 		 displayPlayersScore(mainPane, TextView.people.get(0), TextView.people.get(1));
-		 Playerbox.setLayoutX(10);
-		 Playerbox.setLayoutY(320);
-		mainPane.getChildren().add(Playerbox);
-		
-//		ListView<String> PlayerScorelist = new ListView<String>();
-//		List<String> PlayerScoreItems = new ArrayList<String>(); 
-//		PlayerScoreItems.add("Round 1");
-//		PlayerScoreItems.add("Player 1 Score: ");
-//		PlayerScoreItems.add("Player 2 Score: ");
-//		ObservableList<String> Scoreitems = FXCollections.observableArrayList (
-//				PlayerScoreItems);
-//		PlayerScorelist.setItems(Scoreitems);
-//		PlayerScorelist.setPrefWidth(200);
-//		PlayerScorelist.setPrefHeight(100);
-//		 VBox PlayerScorebox = new VBox();
-//		 PlayerScorebox.setSpacing(10);
-//		 PlayerScorebox.getChildren().addAll(PlayerScorelist);		
-//		 PlayerScorebox.setLayoutX(10);
-//		 PlayerScorebox.setLayoutY(450);
-//		mainPane.getChildren().add(PlayerScorebox);
-		
-		
 		
 		Scene scene = new Scene(mainPane, Screen_WIDHT, Screen_Height);	
 		primaryStage.setTitle("Green Team Wheel Of Jeopardy");
 		primaryStage.setScene(scene);	
 		primaryStage.show();
-		nextTimeline.play();
+		//nextTimeline.play();
 		
-    	JeopardyGrid gridController = new JeopardyGrid(All_Categories, board, gridPane);
+    	JeopardyGrid gridController = new JeopardyGrid(All_Categories, board1, board2, gridPane);
     	gameGrid = gridController.makeGrid();
     	mainPane.getChildren().add(gameGrid);
     	
@@ -273,18 +258,18 @@ public class WheelGui extends Application {
 		    mainPane.getChildren().add(activePlayerLabel);
 		   // mainPane.add(activePlayerLabel, 0,1);
 		    
-		  displaycurrentTokenStatus(mainPane, playerName); 
+		//  displaycurrentTokenStatus(mainPane, playerName); 
 		
 	}
 	
-	public static void displaycurrentTokenStatus(Pane mainPane,  Person activePlayer) {
-		  activePlayerTokenLabel = new Label("Available Tokens: "+activePlayer.getFree_turns());
-		  activePlayerTokenLabel.setTextFill(Color.ANTIQUEWHITE);
-		  activePlayerTokenLabel.setLayoutX(10);
-		  activePlayerTokenLabel.setLayoutY(430);
-		    mainPane.getChildren().add(activePlayerTokenLabel);	
-	}
-	
+//	public static void displaycurrentTokenStatus(Pane mainPane,  Person activePlayer) {
+//		  activePlayerTokenLabel = new Label("Available Tokens: "+activePlayer.getFree_turns());
+//		  activePlayerTokenLabel.setTextFill(Color.ANTIQUEWHITE);
+//		  activePlayerTokenLabel.setLayoutX(10);
+//		  activePlayerTokenLabel.setLayoutY(430);
+//		    mainPane.getChildren().add(activePlayerTokenLabel);	
+//	}
+//	
 	public static void displayPlayersScore(Pane mainPane,  Person player1, Person player2) {
 		  playersScore = new Label(player1.toString() + "\n\n"+ player2.toString());
 		  playersScore.setTextFill(Color.ANTIQUEWHITE);
@@ -302,20 +287,22 @@ public class WheelGui extends Application {
 			}
 		}), duration);
 		
-    	JeopardyGrid gridController = new JeopardyGrid(All_Categories, board, gridPane);
+    	
 		
 		timeline.setOnFinished(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
+				gridController = new JeopardyGrid(All_Categories, board1, board2, gridPane);
 				if (nextTimeline != null) {
 					nextTimeline.play();
 				} 
 				else {
+					
 				//Display end result here..
 					for (Point key : pointList) {
-						if((int)key.x == 400 && (int)key.y == 500) {
-							selectedCategoryLabel.setText("The category that was spun is: "+key.name);
-													
-							gridController.processCategory(key.name, gameGrid);
+						if((int)key.x == 400 && (int)key.y == 500) {					
+								selectedCategoryLabel.setText("The category that was spun is: "+key.name + "\nSpins Remaining: "+spins + "\n\nCurrent Round: "+round);													
+								gridController.processCategory(key.name, gameGrid);
+											
 						}
 	
 					}
@@ -331,17 +318,89 @@ public class WheelGui extends Application {
 		btn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				if(round == 1 && isRoundOver(board1, wheel1)) {
+					round = 2;
+					spins = 5;
+					//Update the allcategories
+					 All_Categories.clear();
+					  for(String key: wheel2.getSectors()) {
+				        	Text t = new Text();
+				        	t.setText(key);
+				        	All_Categories.add(t);
+				        }
+					  
+					  WOJCategories.clear();
+					  pointList.clear();
+					  mainPane.getChildren().removeAll();
+					 
+					  initiateWOJBoard(primaryStage) ;
+				}
+				if(round == 2 && isRoundOver(board2, wheel2)) {
+					//Gameover shit..
+				    showAlert(Alert.AlertType.INFORMATION, gridPane.getScene().getWindow(), "GAME OVER", "THE WINNER IS\n" + getWinner());
+					
+				}
+								
 				Random r = new Random();
 				cyclesPerTimeline = r.nextInt((14 - 3) + 3)+1 ;
 				nextTimeline.setCycleCount(cyclesPerTimeline);
-//				System.out.print(">>>>"+cyclesPerTimeline);
 				nextTimeline.play();
+				spins--;
 			}
 		});
 	
 		return timeline;
 	}
+	 public static boolean isRoundOver(QuestionBoard board, Wheel wheel) {
+	        boolean is_over_spins = true;
+	        boolean is_over_categories = true;
+	        boolean is_over = false;
 
+	        // check if there are spins remaining in the wheel
+	        if (spins > 0) {
+	            is_over_spins = false;
+	        }
+
+	        // check if any of the categories have tiles remaining
+	        for (String category: board.getAllCategories()) {
+	            if (board.getCurrentQuestionDict().get(category) <= 4) {
+	                is_over_categories = false;
+	                // Print for error checking only
+	                //System.out.println("NOT OVER B/C " + category + " is not empty");
+	            }
+	        }
+
+	        // if either the wheel is out of spins or the board is empty: round over
+	        if (is_over_spins || is_over_categories) {
+	            is_over = true;
+	        }
+
+	        // indicate if the round is over
+	        return is_over;
+	    }
+	 public static Person getWinner() {
+    	 List<Person> people = TextView.people;
+        // some variables to help track who is the winner
+        int highest = 0;
+        int highest_index = 0;
+        int current_score = 0;
+
+        // iterate over each person to find the winner
+        for (int i = 0; i < people.size(); i++ ) {
+            current_score = people.get(i).calcTotalScore();
+
+            // check if the player has a higher score than the highest
+            if (current_score > highest) {
+                highest = current_score;
+                highest_index = i;
+            }
+        }
+
+        // declare the winner
+        Person winner = people.get(highest_index);
+
+        return winner;
+    }
 	private void moveCategory(final KeyFrame duration) {
 		for (Text name : WOJCategories) {
 			Point nextPoint = getNextPoint((Integer) name.getUserData());

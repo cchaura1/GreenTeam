@@ -18,8 +18,10 @@ public class WheelOfJepordyMain extends Application {
     // when we want to switch to Chetan's GUI we can just hot swap the views
     // this will require Chetan to have all of the methods that my view has
     static TextView view = new TextView();
-    static Wheel wheel;
-    static QuestionBoard board;
+    static Wheel wheel1;
+    static Wheel wheel2;
+    static QuestionBoard board1;
+    static QuestionBoard board2;
     
     public static void main(String args[]) {
 
@@ -29,16 +31,19 @@ public class WheelOfJepordyMain extends Application {
 //        // initialize the game
 //        boolean continue_game = true;
 //        Person current_player = people.get(0);
-        int round = 1;
+        int round1 = 1;
+        int round2 = 2;
 //        boolean use_free_turn = false;
 
         // create the board and wheel for round 1
-        board = new QuestionBoard("board1.json", round);
-        wheel = new Wheel(board);
+        board1 = new QuestionBoard("board1.json", round1);
+        board2 = new QuestionBoard("../src/board1.json", round2);
+        wheel1 = new Wheel(board1);
+        wheel2 = new Wheel(board2);
         
 //        //***********Initiating GUI**********************
        
-        WheelGui ob = new WheelGui(wheel, board);
+        WheelGui ob = new WheelGui(wheel1,wheel2, board1, board2);
     	ob.launch(args);
 // 
     	//***********************************************
@@ -391,7 +396,7 @@ public class WheelOfJepordyMain extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
-		WheelGui obj = new WheelGui(wheel, board);
+		WheelGui obj = new WheelGui(wheel1,wheel2, board1, board2);
 		obj.start(primaryStage);
 	}
 }

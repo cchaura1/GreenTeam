@@ -41,30 +41,43 @@ import javafx.geometry.Insets;
 public class JeopardyGrid
 {
 	private List<Text> All_Categories;
-	private QuestionBoard board;
+	private QuestionBoard board1;
+	private QuestionBoard board2;
 	private GridPane gridPane;
 
-	JeopardyGrid(List<Text> allCategories, QuestionBoard board, GridPane gridPane)
+	JeopardyGrid(List<Text> allCategories, QuestionBoard board1, QuestionBoard board2, GridPane gridPane)
 	{
 		this.All_Categories = allCategories;
-		this.board = board;
+		this.board1 = board1;
+		this.board2 = board2;
 		this.gridPane = gridPane;
 	}
 
 	public GridPane makeGrid()
 	{
+		String value1, value2, value3, value4, value5 = "";
+		
 		GridPane game_grid = new GridPane();
-		game_grid.setPadding(new Insets(25, 25, 25, 25));
+		game_grid.setPadding(new Insets(10, 10, 10, 10));
 		game_grid.setHgap(80);
 		game_grid.setVgap(20);
 		game_grid.setGridLinesVisible(true);
 		game_grid.setAlignment(Pos.CENTER); 
+		if(WheelGui.round == 1) {
+			 value1 = "200";
+			 value2 = "400";
+			 value3 = "600";
+			 value4 = "800";
+			 value5 = "1000";
+		}
+		else {
+			 value1 = "400";
+			 value2 = "800";
+			 value3 = "1200";
+			 value4 = "1600";
+			 value5 = "2000";
+		}
 
-		String value1 = "200";
-		String value2 = "400";
-		String value3 = "600";
-		String value4 = "800";
-		String value5 = "1000";
 
 		Button cat1 = new Button(All_Categories.get(0).getText());
 		Button cat2 = new Button(All_Categories.get(1).getText());
@@ -146,7 +159,9 @@ public class JeopardyGrid
 	public void processCategory(String category, GridPane gameGrid) 
 	{
 		Integer gridRow = 0;
-		
+		if(WheelGui.round == 2) {
+			System.out.print("Stop here");
+		}
 		if(category.equals(All_Categories.get(0).getText()))
 		{			
 			gridRow = findNextButton(gameGrid, 0);
@@ -263,16 +278,12 @@ public class JeopardyGrid
 		if(previous.equals(TextView.people.get(0).getName())) {
 			TextView.updateCurrentPlayer(TextView.people.get(1));
 			WheelGui.activePlayerLabel.setText("Current Active Player :"+TextView.people.get(1).getName());
-			WheelGui.activePlayerTokenLabel.setText("Available Tokens: "+TextView.people.get(1).getFree_turns());
 			WheelGui.playersScore.setText(previousPerson.toString() + "\n\n"+ TextView.current_player.toString());
-			System.out.print("Current "+TextView.current_player.getName()+ "| Switching to "+ TextView.people.get(1).getName());
 		}
 		if(previous.equals(TextView.people.get(1).getName())) {
 			TextView.updateCurrentPlayer(TextView.people.get(0));
 			WheelGui.activePlayerLabel.setText("Current Active Player :"+TextView.people.get(0).getName());
-			WheelGui.activePlayerTokenLabel.setText("Available Tokens: "+TextView.people.get(0).getFree_turns());
-			WheelGui.playersScore.setText(previousPerson.toString() + "\n\n"+ TextView.current_player.toString());
-			System.out.print("Current "+TextView.current_player.getName()+ "| Switching to "+ TextView.people.get(0).getName());
+			WheelGui.playersScore.setText(TextView.current_player.toString() + "\n\n"+previousPerson.toString() );
 		}
 	}
 
@@ -316,8 +327,17 @@ public class JeopardyGrid
 		Button yesButton = new Button("Yes");
 		Button noButton = new Button("No");
 		Button showButton = new Button("Show answer");
-		VBox YNvbox = new VBox(new Text(board.currentTile(category).getAnswer()), yesButton, noButton);
-		VBox vbox = new VBox(new Text(board.currentTile(category).getQuestion()), showButton);
+		String question = "", answer = "";
+		if(WheelGui.round == 1) {
+			question = board1.currentTile(category).getQuestion();
+			answer = board1.currentTile(category).getAnswer();
+		}
+		else {
+			question = board2.currentTile(category).getQuestion();
+			answer = board2.currentTile(category).getAnswer();
+		}
+		VBox YNvbox = new VBox(new Text(answer), yesButton, noButton);
+		VBox vbox = new VBox(new Text(question), showButton);
 		vbox.setAlignment(Pos.CENTER);
 		vbox.setPadding(new Insets(15));
 		dialogStage.setScene(new Scene(vbox));
@@ -338,11 +358,13 @@ public class JeopardyGrid
 					@Override
 					public void handle(ActionEvent event) {
 						//Add the score for this player
-						if(WheelGui.round == 1) {
-							TextView.current_player.inc_round1_score(board.currentTile(category).getValue());
+						if(WheelGui.round == 1) {						
+							TextView.current_player.inc_round1_score(board1.currentTile(category).getValue());
+							board1.incrementCategotry(category);
 						}
-						if(WheelGui.round == 2) {
-							TextView.current_player.inc_round2_score(board.currentTile(category).getValue());
+						if(WheelGui.round == 2) {				
+							TextView.current_player.inc_round2_score(board2.currentTile(category).getValue());
+							board2.incrementCategotry(category);
 						}
 											
 						dialogStage.close();
@@ -352,11 +374,13 @@ public class JeopardyGrid
 					@Override
 					public void handle(ActionEvent event) {
 						//Subtract the score for this player
-						if(WheelGui.round == 1) {
-							TextView.current_player.inc_round1_score(-1*board.currentTile(category).getValue());
+						if(WheelGui.round == 1) {							
+							TextView.current_player.inc_round1_score(-1*board1.currentTile(category).getValue());
+							board1.incrementCategotry(category);
 						}
 						if(WheelGui.round == 2) {
-							TextView.current_player.inc_round2_score(-1*board.currentTile(category).getValue());
+							TextView.current_player.inc_round2_score(-1*board2.currentTile(category).getValue());
+							board2.incrementCategotry(category);
 						}
 						dialogStage.close();           	
 					}
