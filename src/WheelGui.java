@@ -220,6 +220,8 @@ public class WheelGui extends Application {
 		circle.setFill(Color.DARKBLUE);
 		mainPane.getChildren().add(circle);
 		
+	
+		
 		Rectangle rectangle = new Rectangle();
 		rectangle.setFill(Color.BLACK);
 		rectangle.setX(380);
@@ -230,6 +232,10 @@ public class WheelGui extends Application {
 	    rectangle.setArcHeight(20.0); 
 		mainPane.getChildren().add(rectangle);		
 		mainPane.getChildren().addAll(WOJCategories);
+		
+		Circle dot = new Circle(circle.getCenterX(), circle.getCenterY()-14, 10);
+		dot.setFill(Color.ANTIQUEWHITE);
+		mainPane.getChildren().add(dot);
 		
 		//Show players list
 		List<String> playerList = new ArrayList<String>(); 
